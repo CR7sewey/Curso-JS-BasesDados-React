@@ -1,0 +1,39 @@
+### Navegador vs Node (HTML + JavaScript)
+
+Correr código:
+    - na seta de correr (coderunner)
+    - terminal: (estar na diretoria: para isso fazer cd "__diretoria__") e node index.js
+        - ex: 1º cd C:\Users\Utilizador\OneDrive\Ambiente de Trabalho\Curso_React
+              2º node index.js
+
+Nós desde o inicio temos usado o nodejs (JavaScript do lado do servidor)
+
+Agora, como é que conseguimos manipular a página web (o HTML, o DOM) ?
+1º - criar arquivo HTML - index.html
+2º - No index.html, escrever ! + Enter (Nota: vamos mais à frente estudar melhor a estrutura do html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body></body>
+</html>
+3º - <title>Minha Primeira Página HTML</title>
+4º - Para importar/escrever JS na página de html temos duas opções
+    - colocar a tag <script>console.log("Ola Mundo!")</script> dentro da <head/>
+    - colocar a tag <script>console.log("Ola Mundo!")</script> no final da <body/>
+5º - Ir abrir o html (Olhem para o Titulo da Página)
+6º - Problema ? Muito chato pois pode ficar muito extenso
+   - Para isso, copiar o código para o ficheiro index.js
+   - Substituir <script>console.log("Ola Mundo!")</script> por <script src="index.js">console.log("Ola Mundo!")</script>
+7º - Problema 2 ? 
+   - Estamos a trabalhar no frontend, ou seja, uma página (uma aplicação) é renderizada
+   no computador/máquina do cliente. No entanto, mesmo o chrome e o nodejs tendo a mesma
+   engine, eles não se comportam da mesma maneira. Ex: ir ao navegador e digitar alert('Ola')
+   no console. Digitar alert('Ola') no index.js e correr (dá erro pois não existe no node essa função)
+   No entanto, aquele alert no index.js funciona no navegador, portanto: são dois ambientes
+   diferentes. Logo, qunado manipulamos a página, é o DOM, os elementos da página dentro do
+   frontend do navegador. Quando trabalhamos com bases de dados, rotas etc trabalhamos no backend
+   ou seja, no nodejs!
