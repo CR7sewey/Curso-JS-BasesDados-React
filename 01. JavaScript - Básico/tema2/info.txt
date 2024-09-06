@@ -1,0 +1,24 @@
+### Conceito - Comentários
+
+# Formas de Comentar:
+    - // Eu Sou um Comentário em linha
+    - /* Eu Sou um Comentário em bloco */
+    - /** Eu Sou um Comentário em bloco */
+
+# Os Comentários são pedaços de código de código aqui que na verdade são ignorados pelo motor aqui do JavaScript.
+Então por exemplo se eu quero explicar alguma coisa que eu posso colocar aqui duas bases dessa maneira
+que é escrever um comentário aqui seria como se fosse uma anotação aqui no meu código ou qualquer coisa
+do tipo.
+
+# O comentário não será executado nem exibido nem nada vai acontecer, é simplesmente
+um comentário, uma anotação que eu fiz aqui no meu código.
+
+# E eu posso fazer esses comentários sempre que a engine motor do JavaScript que vê estas barras (//)
+ele vai passar a ignorar tudo o que tiver depois dessas barras aqui.
+
+# No navegador usamos a engine/motor do Google Chrome (V8 da Google), que é igual à do node.
+
+# Utilidade ?
+    - Para ir comentando o código à medida que é escrito sem interferir com o código em si
+    - Documentação de bibliotecas, funções, etc
+

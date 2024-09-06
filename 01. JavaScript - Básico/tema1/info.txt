@@ -1,0 +1,29 @@
+### Primeiro Conceito - console.log
+
+Método (log) do Objeto (console) que usamos para:
+ - exibir coisas na tela (No terminal)
+ - no console do navegador
+ - debbugar programas
+
+Portanto podemos pensar no console.log() como uma função para "printar"
+
+Posso colocar praticamente qualquer coisa dentro do console.log
+
+- console.log(Miguel) --> erro - não existe o tipo de objeto Miguel (valor literal)
+- console.log("Miguel") --> Miguel - dá pois é uma string
+- console.log('Miguel') --> Miguel - dá pois é uma string
+- console.log(`Miguel`) --> Miguel - dá pois é uma string
+
+- //console.log("Ola, eu sou o "Miguel""); --> erro, pois a engine do JS acha que eu tenho "Ola eu sou o " Miguel"" 
+- console.log('Ola, eu sou o "Miguel"'); // já funciona!
+- console.log("Ola, eu sou o 'Miguel'"); // já funciona!
+
+/* NOTA:
+ * Tudo o que tiver dentro de "" é considerado String pelo JS (tipo) -> console.log(typeof "Miguel")
+ * console.log(1); o 1 é um Número
+ * console.log(1.1); o 1.1 é um Número (Ponto Flutuante)
+ */
+
+Poder do console.log
+- console.log(1,2,3,4,"Miguel","Ronaldo")
+- console.log(1, typeof 1, "Miguel", typeof "Miguel")
