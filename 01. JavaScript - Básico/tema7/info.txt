@@ -1,0 +1,27 @@
+### Tipos Dados Primitivos
+
+Tipos de Dados Primitivos:
+    - string: "Miguel"
+    - number: 12, 1.2
+    - boolean: true, false
+    - undefined: let nome; // não aponta para lugar nenhum na memória
+    - null: null; // não aponta para lugar nenhum na memória
+    - symbol
+
+Nota: null é diferente de undefined
+
+Tipos de Dados passado por referencia (ex: Array)
+- com este tipo de dados, se igualarmos duas variáveis elas vão apontar para O
+mesmo valor na memoria (mesma referencia). Nos dados primitivos, é feita mesmo uma cópia.
+Então, uma mudança num pode refletir no outro
+- Vamos aprender como contornar isto mais à frente
+
+let array = [1, 2, 3];
+let array2 = array;
+array.push(1); // adicionar valor em array -> vamos ver depois
+console.log(array, array2); // ambos ficam com o mesmo valor, pois a referencia na memoria é a mesma
+
+let a = 2;
+let c = a;
+a = 3;
+console.log(a, c);
