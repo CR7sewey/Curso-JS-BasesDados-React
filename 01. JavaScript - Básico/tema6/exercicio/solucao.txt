@@ -1,0 +1,29 @@
+// Tenta reproduzir a seguinte frase usando o console.log()
+// Frase: Meu nome é "NOME", tenho "IDADE" anos, peso "PESO" kg
+//        tem "ALTURA" de altura e seu IMC é de "IMC"
+
+// Solução
+const nome = "Miguel";
+const apelido = "Mota Carvalho";
+const age = 25;
+const peso = 87;
+const alturaEmMetros = 1.8;
+let imc; // peso/altura**2
+let anoNascimento;
+
+const anoAtual = 2024;
+imc = peso / alturaEmMetros ** 2;
+anoNascimento = anoAtual - age;
+
+console.log(
+  "O meu nome é",
+  nome,
+  apelido,
+  ", tenho",
+  age,
+  "anos, peso",
+  peso,
+  "kg"
+);
+console.log(`tem altura de ${alturaEmMetros} e seu IMC é de ${imc}`);
+console.log(`${nome} ${apelido} nasceu em ${anoNascimento}.`);

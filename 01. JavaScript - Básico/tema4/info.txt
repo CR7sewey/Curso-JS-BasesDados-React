@@ -1,0 +1,47 @@
+### Variáveis com let e const
+
+# O que é uma variavel? É uma forma de salvar na memória dados no RunTime (tempo
+de execução do código)
+
+# Se quisermos utilizar várias vezes a mesma variável, não faz sentido estar sempre
+a tipar. Podemos armazenar assim em variaveis
+
+3 formas de declarar variáveis:
+- let
+- const
+- var (não tão usado, usar antes let)
+
+ex:
+let nome = "Miguel"
+
+As variáveis let podem ser redeclaradas:
+ex: 
+let nome = "Miguel"
+console.log(nome) // Miguel
+nome = "João"
+console.log(nome) // João
+
+As variáveis podem ser declaradas e não inicializadas;
+let nome;
+console.log(nome) // undefined
+nome = "Miguel" // inicializada
+
+Não posso redeclarar uma variável:
+let nome = "Miguel"
+let nome = "João"
+
+# Pequenas regras para criar variaveis
+// Nao podemos criar variaveis com palavras reservadas!!;
+// ex: let if, let else, let let, etc;
+// Variaveis tem de ter nomes significativos;
+// Nao comecar o nome de uma variavel com numero - ex: let 1 =;
+// Nao podem ter espacos ou tracos - ex: let meu nome =;
+// camelCase - ex: let meuNomeDois =;
+// Case-sensitive: nomeCliente é diferente de nomecliente
+// Nao se pode redeclarar variaveis com let
+// usar let, not var!
+
+# 1 Diferença entre var e let
+# o var permite redeclaração - não muito desejavel!
+var nome = "Miguel"
+var nome = "Nuno"
