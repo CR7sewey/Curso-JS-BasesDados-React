@@ -1,0 +1,26 @@
+// EXERCICIO
+Dadas 3 variáveis varA = "A", varB = "B" e varC = "C",
+escreve um script para o qual o console.log(varA, varB, varC) seja B C A
+
+// Solução Clássica
+let varA = "A";
+let varB = "B";
+let varC = "C";
+
+const varATemporaria = varA; // Passo crucial, pois se não armazenar-mos varA noutra variável (é temporaria), esta vai-se perder!
+varA = varB;
+console.log(varA, varB, varC);
+varB = varC;
+console.log(varA, varB, varC);
+varC = varATemporaria;
+console.log(varA, varB, varC);
+
+// Solução Moderna
+let varA = "A";
+let varB = "B";
+let varC = "C";
+
+[varA, varB, varC] = [varB, varC, varA]
+console.log(varA, varB, varC);
+
+

@@ -1,0 +1,69 @@
+### Operadores Aritméticos
+
+# Aritméticos
++, -, /, *
+** - Potenciacao
+% - resto da divisao
+1º () ** [* / %] [+ -] end
+console.log(5 * 2 + (4 - 1) * 2 ** 2); // 10 + 3*4
+
+
+const num1 = 5; // number
+const num2 = 10; // number
+const str1 = "5"; // string
+
+let soma = num1 + num2;
+console.log("Soma:", soma);
+
+let concatenacao = str1 + num2; // concatenacao
+console.log("Concatenação:", concatenacao);
+
+let multi = num1 * num2;
+console.log("Multiplicacao:", multi);
+
+let div = num2 / num1;
+console.log("Divisao:", div);
+
+let sub = num1 - num2;
+console.log("Subtracao:", sub);
+
+let pot = num1 ** num2;
+console.log("Potencia:", pot);
+
+let rest = num2 % num1;
+console.log("Resto da Divisao:", rest);
+
+// Como funcionam contadores -> incremento ++; decremento --
+let contador = 1;
+contador++; // 2 aqui primeiro tem o valor do contador e depois soma
+++contador; // 3 incrementa primeiro ao valor!
+contador--; //2
+--contador; //1
+contador += 1; // contador = contador + 1
+contador **= 2; // contador = contador**2
+contador **= 2; // contador = contador**2
+contador *= 2; // contador = contador*2
+contador /= 4; // contador = contador/4
+console.log(contador);
+
+const d = 10;
+const e = "Mike";
+const r = "5.2";
+const r_converted_parseInt = parseInt(r); // converte para int
+const r_converted_parseFloat = parseFloat(r); // conserva as casas decimais
+const r_converted_Number = Number(r); // converte para o Numero
+console.log(r_converted_parseInt, r_converted_parseFloat, r_converted_Number); // 5 5.2 5.2
+
+// Misterios do JS
+console.log(d * e); // NaN - not a number
+console.log(d * r); // aqui multiplica. Pq? pq o javascript é doido :)
+console.log(d + r_converted_parseInt, typeof (d + r_converted_parseInt));
+
+# Explicacao -> o javascript é uma linguagem dinamica, e para além disso, O
+motor do javascript tenta sempre achar uma possivel operacao antes de levantar um
+erro. Por isso, quando eu faço a soma de uma string com um número ele não dá
+erro ou um NaN pois encontra a Operação de Concatenação. Quando fazemos uma multiplicação
+entre uma string e um número, ele tenta vários processos, inclusive tentar converter
+a string num número. Daí, se eu fizer 10 * "5" = 50, pois 5 é convertivel no tipo number.
+No caso de uma string nãoo convertível, por exemplo "Miguel", "Miguel" + 5 = NaN
+Qual o cenário ideal então?? -> Devemos sempre converter para o tipo que queremos!

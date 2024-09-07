@@ -1,0 +1,36 @@
+// Strings - visao mais detalhada
+
+// String para outros Objects
+console.log(
+  Boolean("true"),
+  Number("1"),
+  JSON.parse(JSON.stringify({ nome: "Miguel" }))
+);
+
+// Várias formas de Termos Strings
+let umaString1 = "Eu sou uma string"; // ""
+let umaString2 = "Eu sou uma string"; // ''
+let umaString3 = `Eu sou uma string`; // ``
+let umaString4 = "Eu" + " sou uma string"; // concatenação
+console.log(umaString1, "|", umaString2, "|", umaString3, "|", umaString4);
+
+// Strings são indexadas, são iteraveis
+// 0123456789...   16
+//"Eu sou uma string";
+console.log(umaString1[0], umaString1[1]);
+
+// Metodos para Objetos do tipo string
+// testar umaString1.
+console.log(umaString1.length); // tamanho da string
+console.log(umaString1.split(" ")); // separa num array todas as subtrings separadas por " "
+console.log(umaString1.replace("u", "U")); // substituir u por U; para substituir todos usar regex
+console.log(umaString1.replace(/u/g, "U")); // substituir u por U; para substituir todos usar regex
+console.log(umaString1.charAt(3)); // character na posição 3 (s)
+console.log(umaString1.substring(3, 6)); // uma substring do character 3 ao 6 (exclusive), não permite negativos como o slice
+console.log(umaString1.slice(3, 6)); // uma substring do character 3 ao 6 (exclusive)
+console.log(umaString1.slice(-3)); // uma substring do character -3 = -3+length
+console.log(umaString1.includes("u")); // true se tiver "u", false se não
+console.log(umaString1.concat("Eu sou", " ", "uma ", "string")); // concatena
+console.log(umaString1.toUpperCase(), umaString1.toLowerCase()); // transforma em maiusculo e minusculo
+console.log(umaString1.indexOf("sou")); // indice onde começa 'sou'
+console.log(umaString1.match(/[a-z]/g)); // retorna todas as minusculas - RegEx

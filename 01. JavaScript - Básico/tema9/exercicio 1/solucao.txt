@@ -1,0 +1,11 @@
+// EXERCICIO
+// Digitar numero1, numero2, soma e alerta com a mensagem: "O resultado da soma é 'SOMA'"
+
+// Solução
+1º Criar um ficheiro html e associar um script .js a ele
+
+2º No script .js escrever o seguinte código
+const num1 = Number(prompt("num1: "));
+const num2 = Number(prompt("num2: "));
+const soma = num1 + num2;
+window.alert(`O resultado da soma é ${num1 + num2}`);
