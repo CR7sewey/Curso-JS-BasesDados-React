@@ -1,0 +1,9 @@
+### Extensões
+
+# Code Runner - para executar scripts de JS, Python etc
+
+# Dracula Theme Official - estilo/tema, não necessário!
+
+# Live Server - Lançar um Servidor desenvolvimento local
+
+# Material Icon Theme - Para configurar icons de arquivos
