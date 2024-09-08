@@ -1,0 +1,33 @@
+1º Criar o index.html
+
+2º
+const form = document.querySelector(".form"); // buscar a tag "form" do HTML pela class
+const resultado = document.querySelector(".resultado"); // buscar a tag "resultado" do HTML pela class
+const pessoas = []; // inicializar um array para armazenar as pessoas
+
+// capturar evento *
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // evitar que a página seja atualizada
+  const nome = form.querySelector(".nome").value; // buscar o valor do nome
+  const sobrenome = form.querySelector(".sobrenome").value; 
+  const peso = form.querySelector(".peso").value;
+  const altura = form.querySelector(".altura").value;
+  const pessoa = { // guardar no objeto pessoa os dados
+    nome,
+    sobrenome,
+    peso,
+    altura,
+  };
+  pessoas.push(pessoa); // meter para o array os dados
+  console.log(pessoas);
+  resultado.innerHTML += `<p>${pessoa.nome}, ${pessoa.sobrenome}, ${pessoa.peso}, ${pessoa.altura}</p>`; // colocar no elemento resultado o elemento p
+});
+
+* Nota:
+Quando falamos de DOM, e interação com o navegador, nós podemos pensar numa relação
+causa efeito, a que chamamos eventos. Basicamente, tudo o que se faz na página é um
+evento. Seja clicar no cursor, submeter um formulario, passar com o cursor por cima
+de um texto. A ideia é que nós capturemos esse evento, e performemos assim uma ação.
+Neste caso, ao submeter o formulário, capturamos o evento 'submit' no elemento 'form'
+do nosso html (DOM). Ao capturar isso, podemos fazer o tipo de ações que quisermos,
+seja enviar esses dados para a nossa base de dados, etc

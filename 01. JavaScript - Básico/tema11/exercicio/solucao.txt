@@ -1,0 +1,20 @@
+// EXERCICIO
+
+// Pedir ao utilizador para introduzir um numero - TODO
+const numero = Number(prompt("Digite um número"));
+
+// Ir buscar o elemento html - aprenderemos mais tarde
+const numeroTitulo = document.getElementById("numero-titulo");
+// Ir buscar o elemento html - aprenderemos mais tarde
+const texto = document.getElementById("texto");
+
+// Alterar o texto de uma tag html
+numeroTitulo.innerHTML = numero;
+
+texto.innerHTML = "";
+texto.innerHTML += `<p>Raiz quadrada ${Math.sqrt(numero)}</p>`;
+texto.innerHTML += `<p>${numero} é inteiro: ${Number.isInteger(numero)}</p>`;
+texto.innerHTML += `<p>É NaN: ${Number.isNaN(numero)}</p>`;
+texto.innerHTML += `<p>Arrendondando para baixo: ${Math.floor(numero)}</p>`;
+texto.innerHTML += `<p>Arrendondando para cima: ${Math.ceil(numero)}</p>`;
+texto.innerHTML += `<p>Duas casas decimais: ${numero.toFixed(2)}</p>`;

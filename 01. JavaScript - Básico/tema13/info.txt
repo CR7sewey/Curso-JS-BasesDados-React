@@ -1,0 +1,43 @@
+// Objetos - Básico
+
+Imaginem que queremos armazenar informação de algo?
+Por exemplo queremos a informação do aluno Miguel da turma A
+Podemos armazenar num objeto
+const informacaoMiguel = {
+  nome: "Miguel",
+  idade: 25,
+  turma: "A",
+  passou: true,
+};
+
+Vantagens ?:
+    -   Conseguimos mapear melhor a que corresponde cada valor
+    -   Semelhante a estruta de um ficheiro JSON (mais tarde veremos melhor)
+    -   Formato mais usado para enviar dados para API/Bases de Dados (mais tarde veremos melhor)
+    -   Em JavaScript praticamente todas as estruturas baseiam-se neste conceito
+
+Estrutura:
+    - {}
+    - chave: valor (ex: nome: Miguel)
+    - Obter valor: objeto.chave
+    - Podemos ter todo o tipo de valores: dados primitivos, arrays, objetos, funcoes (vamos ver depois!)
+
+// Poder Objetos
+
+const exemplo = {
+  nome: "Miguel",
+  idade: 25,
+  turma: "A",
+  passou: true,
+  incrementaIdade: () => {
+    this.idade++;
+  },
+  alteraPassou() {
+    this.passou = !this.passou;
+  },
+};
+
+exemplo.alteraPassou();
+console.log(exemplo); 
+
+// Const vs Let em Objetos (semelhante a Arrays)
