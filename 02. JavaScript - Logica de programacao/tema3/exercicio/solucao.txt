@@ -1,0 +1,73 @@
+// Dada um Peso e uma Altura enviada pelo utilizador, determina o IMC e o Resultado
+
+const IMC = [
+  "Menos do que 18.5",
+  "Entre 18.5 e 24.9",
+  "Entre 25 e 29.9",
+  "Entre 30 e 34.9",
+  "Entre 35 e 39.9",
+  "Mais de 40",
+];
+
+const resultado = [
+  "Abaixo do peso",
+  "Peso normal",
+  "Sobrepeso",
+  "Obesidade grau 1",
+  "Obesidade grau 2",
+  "Obesidade grau 3",
+];
+
+const form = document.querySelector(".form");
+const result = document.querySelector(".resultado");
+let imc;
+let tipo;
+
+form.addEventListener("submit", (evento) => {
+  evento.preventDefault(); // previne que atualise no button
+  const peso = evento.target.querySelector(".peso").value;
+  const altura = form.querySelector(".altura").value;
+  let imc_valor = "";
+  if (peso === "" || altura === "") {
+    alert("Introduza todos os dados!");
+    return;
+  }
+  console.log("estou aqui");
+  p = Number(peso);
+  a = Number(altura);
+
+  if (!p) {
+    alert("Peso inválido");
+    return;
+  }
+
+  if (Number.isNaN(a)) {
+    alert("Altura inválida");
+    return;
+  }
+
+  imc = parseFloat((p / Math.pow(a, 2)).toFixed(2));
+  if (imc >= 39.9) {
+    tipo = resultado[5];
+  }
+
+  if (imc >= 33.9) {
+    tipo = resultado[4];
+  }
+
+  if (imc >= 29.9) {
+    tipo = resultado[3];
+  }
+
+  if (imc >= 24.9) {
+    tipo = resultado[2];
+  }
+  if (imc >= 18.5) {
+    tipo = resultado[1];
+  }
+  if (imc < 18.5) {
+    tipo = resultado[0];
+  }
+
+  result.innerHTML = `<p>Seu IMC é ${imc} (${tipo})</p>`;
+});

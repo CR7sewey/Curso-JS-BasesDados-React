@@ -1,0 +1,1 @@
+### Nota: Para este exercicio dá jeito ter um nível mais avançado de funcoes e do DOM - sugestão: voltar cá pós funçoes

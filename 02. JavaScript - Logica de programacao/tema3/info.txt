@@ -1,0 +1,36 @@
+### Estruturas de Dados condicionais
+
+# if, else if e else
+
+Utilidade - para desviar o fluxo da aplicacação
+ex: se a variavel A > 10 segue um caminho
+    caso contrario, segue outro
+
+if - se (pode ser usado sozinho; só podemos ter um if)
+else if - outro se (preciso de um if antes; podemos ter vários else if)
+else - caso contrario (preciso de um if antes; só podemos ter um else)
+
+const hora = 19;
+
+if (hora < 12 && hora >= 0) { // se a hora for menor que 12 e maior ou igual a 0
+  console.log("Bom dia!");
+} else if (hora < 18 && hora >= 12) { // se a hora for menor que 18 e maior ou igual a 12
+  console.log("Boa tarde!");
+} else if (hora < 24 && hora >= 18) { // se a hora for menor que 24 e maior ou igual a 18
+  console.log("Boa noite!");
+} else { // caso não cumpra nenhuma das condições de cima
+  console.log("Hmmm... estranho!");
+}
+
+# Estrutura
+condicao - true ou false; se true, entra ali; se não, passa para outro bloco
+
+if (condicao) {
+    // Codigo
+}
+else if (condicao) {
+    // Codigo
+}
+else {
+    // Codigo
+}
