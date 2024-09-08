@@ -1,0 +1,19 @@
+### Operação Ternária
+
+Forma de reduzir código
+
+Cenário: Imaginem que caso uma condicao seja verdadeira, o output é um, caso falsa, é outro
+
+- com if/else ficaria algo do tipo
+
+let output;
+if (condicao) {
+    output = 'Algo'
+}
+else {
+    output = 'Outro'
+}
+
+- com operação Ternária
+let output = condicao === true ? 'Algo':'Outro'
+lê-se: se condicao igual (===) a true, então (?) output é 'Algo'. se não, output é (:) 'Outro'
