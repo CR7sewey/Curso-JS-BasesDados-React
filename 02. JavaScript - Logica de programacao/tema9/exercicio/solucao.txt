@@ -1,0 +1,58 @@
+// Adicionar os elementos do array elementos ao html (onde diz <!--- Aqui --->)
+/*
+Passos:
+1- ir buscar a section ao html
+2- criar uma div para armazenar os futuros elementos (.createElement)
+3- Adicionar os elementos à div com texto
+    - .innerText
+    - appendChild
+*/
+
+const elementos = [
+  { tag: "p", texto: "Frase 1" },
+  { tag: "div", texto: "Frase 2" },
+  { tag: "footer", texto: "Frase 3" },
+  { tag: "section", texto: "Frase 4" },
+];
+
+function toHtml() {
+  const section = document.querySelector(".container");
+  const div = document.createElement("div");
+  div.innerHTML = "";
+
+  for (let i = 0; i < elementos.length; i++) {
+    let { tag, texto } = elementos[i];
+    let element = document.createElement(tag);
+    /*let textoCriado = document.createTextNode(texto); // possível solução
+    element.appendChild(textoCriado);*/
+    element.innerHTML += texto;
+    //tmb da, em vez de fazer o textoCriado     //element.innerText = texto; //element.innerHTML = texto; tmb dava mas como sabemos que nao ha html, assim fica mais seguro
+
+    element.style.backgroundColor = "red";
+    div.appendChild(element);
+  }
+  section.appendChild(div);
+}
+
+toHtml();
+
+// Notas:
+
+// dom - document object model - interface de objetos que me permite manipular a pagina
+// bom - browser object model - a parte do window
+// node - nao tem a parte window (prompt, alert, essas cenas), dai nao vermos nada disto aqui, so no browser
+
+// html child de document, document child de window
+// ver arvore do DOM
+
+// DOM
+// O objeto global do navegador é o window, topo da cadeia, do DOM
+// dps window.document, arvore do dom, pai de todos
+// body e head são child de html, html child de document, child de window!!
+// section child de body, aka body parent de section
+// usamo a api do dom ex: document.createElement, .appendChild
+// no exercicio anterior, const h1 = conaitner.querySelector('h1')
+// o dom ja tem um api/interface para manipular o h1
+// tipo h1.style.bacgroudColor='red'; dai conseguirmos usar js para manipular tudo
+
+// keyword - arvore do DOM
