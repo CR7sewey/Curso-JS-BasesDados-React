@@ -1,1 +1,30 @@
-// For in
+// For clássico
+
+// Utilidade: se queremos repetir várias vezes a mesma coisa, ou iterar várias vezes
+// sobre algo. Para isso podemos usar estruturas de repetição
+
+for (let i = 0; i < 10; i++) {
+  // codigo
+}
+/*
+let i = 0 significa a inicialização da variavel (i - index)
+i<10 é a condição para conaido o for vai parar
+i++ é o incremento (neste caso i=i+1)
+*/
+
+//Agora por exemplo, quero printar i = 0, i = 1, i = 2 ... até 10 (exclusive)
+for (let i = 0; i < 10; i++) {
+  console.log(i);
+}
+
+// DOM
+// O objeto global do navegador é o window, topo da cadeia, do DOM
+// dps window.document, arvore do dom, pai de todos
+// body e head são child de html, html child de document, child de window!!
+// section child de body, aka body parent de section
+// usamo a api do dom ex: document.createElement, .appendChild
+// no exercicio anterior, const h1 = conaitner.querySelector('h1')
+// o dom ja tem um api/interface para manipular o h1
+// tipo h1.style.bacgroudColor='red'; dai conseguirmos usar js para manipular tudo
+
+// keyword - arvore do DOM

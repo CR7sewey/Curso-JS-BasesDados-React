@@ -1,0 +1,39 @@
+// Funcoes Recursivas
+
+// A ideia da funcao recursiva é chamar-se a si mesma no seu proprio escopo,
+// No fundo, é como se fosse um loop sobre ela propria.
+
+// O fatorial de 5 é 5*4*3*2*1 = 120
+function fatorial(num) {
+  if (num === 0) {
+    // para a execucao da funcao, senão ficaria num loop infinito
+    return 1;
+  }
+  return num * fatorial(num - 1);
+}
+
+//console.log(fatorial(5));
+
+function recursiva(max) {
+  if (max >= 10) {
+    return;
+  }
+  console.log(max);
+  max++;
+  recursiva(max);
+}
+
+//recursiva(0)
+
+function fibonacci(num1, num2) {
+  if (num1 > 1000) {
+    return;
+  }
+  console.log(num1);
+  temp_num2 = num2;
+  num2 = num2 + num1;
+  num1 = temp_num2;
+  fibonacci(num1, num2);
+}
+
+fibonacci(0, 1);

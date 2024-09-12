@@ -1,0 +1,73 @@
+### Funcoes geradoras
+// pausa o codigo em x local, e só depois é executado o resto da funcao
+// lazy evaluation
+
+function* generator1() {
+  // some code
+  yield "Something 1"; // segura a variaveç
+  // some code
+  yield "Something 2";
+  // some code
+  yield "Something 3";
+}
+
+let a = generator1();
+console.log(a.next());
+console.log(a.next());
+console.log(a.next());
+console.log(a.next());
+
+//
+function* generator2(min, max) {
+  // let n=0;
+
+  while (min <= max) {
+    yield min;
+    min++;
+  }
+  return;
+}
+let g2 = generator2(5, 10);
+for (let i of g2) {
+  console.log(i);
+}
+
+/// delegar
+function* generator3() {
+  yield 0;
+  yield 1;
+  yield 2;
+}
+
+function* generator4() {
+  yield* generator3();
+  yield 3;
+  yield 4;
+}
+console.log("----");
+const g4 = generator4();
+for (let i of g4) {
+  console.log(i);
+}
+
+////
+
+function* generator5() {
+  yield function () {
+    console.log("AQUI");
+  };
+
+  /// a de baixo nao é executada!
+  return () => console.log("DO return!");
+  ////
+
+  yield function () {
+    console.log("agora aqui");
+  };
+}
+
+const g5 = generator5();
+const func1 = g5.next().value;
+const func2 = g5.next().value;
+func1();
+func2();
