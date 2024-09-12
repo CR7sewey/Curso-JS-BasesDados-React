@@ -1,0 +1,27 @@
+// Escopo Léxico e Closures
+
+// Habilidade de aceder ao escopo mãe ...
+// Closure - quando "fechamos" um Escopo, a habilidade em aceder ao seu escopo léxico
+
+// GLOBAL
+const nome1 = "Mike";
+// ESCOPO 1 = GLOBAL
+function retornaFuncao(nome) {
+  const nome2 = "Mike";
+  // ESCOPO 2 = da primera funcao
+  console.log("Ola, eu estou aqui", nome1, nome2); //, nome3 - erro // acesso a todos ao closure 1 e 2 (vizinhos acima)
+  return function () {
+    // closure
+    // ESCOPO 3 = da segunda funcao
+    const nome3 = "Mike";
+    console.log("Ola, eu estou aqui", nome, nome1, nome2, nome3); // acesso a todos os closures (vizinhos acima)
+
+    return nome;
+  };
+}
+
+const n1 = retornaFuncao("Mike"); // fecha o closure aqui, vai ser sempre mike
+const n2 = retornaFuncao("Joao");
+
+console.log(n1());
+console.log(n2());

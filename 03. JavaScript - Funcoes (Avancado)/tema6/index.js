@@ -1,0 +1,29 @@
+// IIFE -> immeadiately invoked function expression
+// queremos fugir do escopo global no browser
+// e que outras bibliotecas pouluam o escopo global
+
+function qualquerCoisa() {
+  console.log(12111);
+}
+
+qualquerCoisa();
+
+// Para resolver isto, podemos fazer assim (semelhante a jquery)
+// crio dentro de () e executo logo
+// nada disto toca o escopo global
+(function (idade) {
+  const nome = "Oi";
+  var a = 1;
+  console.log(11111);
+  function falaOi(nomeee) {
+    return nome + " " + nomeee + " " + idade;
+  }
+
+  function falaNome() {
+    console.log(falaOi("Mike"));
+  }
+  falaNome();
+})(24);
+//console.log(a) // da erro pq a nao ficou global
+const nome = "Ola"; // nao ha conflito desta forma - do escopo global
+console.log(nome);
