@@ -5,6 +5,7 @@
 
 // 1º - funcao sem parametros
 // arguments - parametros (argumentos passados) da funcao guardados como arguments: objeto do tipo {'0': argumento[0], ...}
+// Nota: arguments so disponivel quando declaramos a funcao como function
 function funcao() {
   console.log(arguments, arguments[0]);
 }

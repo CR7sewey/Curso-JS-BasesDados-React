@@ -1,0 +1,91 @@
+// Funcoes - return
+
+// O return de um função vai retornar algo que regra geral foi obtido naquela
+// funcao para puder ser utilizado depois
+// Nota IMPORTANTE: o return para a execução da função
+
+function soma(x, y) {
+  return x + y; // devolve o valor da soma para ser usado depois
+  console.log(x + y); // não vou ser executado pois o return está antes
+}
+console.log(`O Ronaldo tem ${soma(2, 3)} bolas de ouro.`);
+
+function funcaoSemRetorno() {
+  console.log("Estou aqui");
+}
+
+const fsr = funcaoSemRetorno(); // undefined, sem retorno
+console.log(fsr);
+
+function teste(x, y, z) {
+  if (x % 2 === 0) {
+    return "x é par!"; // se x par função para aqui...
+  }
+
+  if (y % 2 === 0) {
+    return "y é par!"; // se y par função para aqui...
+  }
+
+  if (z % 2 === 0) {
+    return "z é par!"; // se z par função para aqui...
+  }
+
+  return "Nenhum dos valores é par!";
+}
+
+console.log(teste(2, 2, 2));
+console.log(teste(1, 2, 2));
+console.log(teste(1, 1, 2));
+console.log(teste(1, 1, 1));
+
+// Podemos usar funções para criar objetos - factory function (vamos ver mais à frente)
+// oou seja, retorna um objeto
+const criarUmaPessoa = (nome, sobrenome, idade) => {
+  const pessoa = {
+    nome,
+    sobrenome,
+    idade,
+  };
+  return pessoa;
+};
+
+console.log(criarUmaPessoa("Miguel", "Carvalho", 25));
+
+// Função a retornar outra funcao - decorador
+function decorador(funcao) {
+  console.log("Estou aqui!!", funcao);
+  return (...valores) => {
+    console.log("Estou aqui!!", valores);
+    return funcao(valores);
+  };
+}
+
+const decorador1 = decorador((valores) => valores[0] + valores[1]); // isto é uma funcao! (o return)
+const decorador2 = decorador1(1, 2); // isto é um valor = valores[0] + valores[1]
+console.log(decorador2);
+
+// Exemplo interessante
+function duplicar(x) {
+  return 2 * x;
+}
+
+function triplicar(x) {
+  return 3 * x;
+}
+
+function quadriplicar(x) {
+  return 4 * x;
+}
+
+// Melhoria
+function multiplicador(fator) {
+  console.log(fator); // variavel fica guardad temporariamente neste escopo/bloco, e depois pode ser usada na funcao de retorno
+  return function (numero) {
+    return numero * fator;
+  };
+}
+
+const duplicador = multiplicador(2);
+const triplicador = multiplicador(3);
+const quadriplicador = multiplicador(4);
+console.log(duplicador(10), triplicador(10), quadriplicador(10));
