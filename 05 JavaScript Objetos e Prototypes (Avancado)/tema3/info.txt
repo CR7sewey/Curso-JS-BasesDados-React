@@ -1,0 +1,56 @@
+
+// Object.defineProperty - getter and setter (na funcao construtora) - proteger propriedades
+
+function Produto(nome, preco, stock) {
+    this.nome = nome;
+    this.preco = preco;
+    //this.stock = stock;
+    //let stockPrivate = stock; posso trabalhar com esta privada nos getters and setter
+
+    Object.defineProperty(this, 'stock', {
+        enumerable: true, 
+        // value: stock, //ja nao preciso pq uso getter e setter
+        // writable: false, //Ja nao preciso pq uso setter
+        configurable: false, // pode apagar/configurar (true) ou nao
+        get: function() {
+            return stock;
+        },
+        set: function(valor) {
+            if (typeof valor !== 'number') {
+                throw new TypeError('Not a number!!');
+            }
+            return valor;
+
+        }
+    }); // tornar stock private
+
+}
+
+const p1 = new Produto('Shirt',20,3);
+console.log(p1,p1.stock)
+//p1.stock = 'Oi'; // nao altera
+console.log(p1,p1.stock)
+
+// com factory function
+function produto(nome, preco, stock) {
+    return {
+    nome,
+    preco,
+    //this.stock = stock;
+    //let stockPrivate = stock; posso trabalhar com esta privada nos getters and setter
+
+    get stock() {
+        return stock;
+    },
+    set stock(valor) {
+        if (typeof valor !== 'number') {
+            throw new TypeError('Not a number!!');
+        }
+        return valor;
+    },
+
+}};
+
+const p2 = produto('Shirt',20,3);
+console.log(p2);
+p2.stock = 'OI';
