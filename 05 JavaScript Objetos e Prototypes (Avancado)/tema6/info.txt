@@ -1,0 +1,80 @@
+### Object - prototypes - manipular
+
+const objA = {
+  // no nvagador meter objA e ver prototype
+  chave: "A",
+  chaveA: "AA",
+};
+
+const objB = {
+  // no nvagador meter objB e ver prototype
+  chave: "B",
+  chaveB: "BB",
+};
+
+const objC = new Object();
+objC.chave = "C";
+objC.chaveC = "CC";
+
+// Como alterar o prototype de um objeto?
+
+Object.setPrototypeOf(objB, objA); // tipo herança
+Object.setPrototypeOf(objC, objB);
+console.log(Object.getPrototypeOf(objC));
+console.log(Object.getPrototypeOf(objB));
+
+// Como é prototype, e como falamos anteriormente, até nos escopos, ou nas funcoes,
+// a hierarquia, entao quand procuramos algo no objC se não achar passa para o objB
+// e de seguida para o objA e de seguida para o Object
+
+// Então,
+console.log(objC.chave, objC.chaveC, objC.chaveB, objC.chaveA);
+
+// Com Constructor function
+function Produto(nome, preco) {
+  this.nome = nome;
+  this.preco = preco;
+
+  // metodos no prototype da func!!
+}
+
+Produto.prototype.desconto = function (valor) {
+  this.preco = this.preco * (1 - valor / 100);
+};
+
+Produto.prototype.aumentaPreco = function (valor) {
+  this.preco = this.preco * (1 + valor / 100);
+};
+
+const p1 = new Produto("camisa", 1000);
+// Literal
+const p2 = {
+  // chaves tem de bater certo!!
+  nome: "caneca",
+  preco: 100,
+};
+
+Object.setPrototypeOf(p2, p1);
+p2.aumentaPreco(20);
+console.log(p2);
+console.log(p2.preco);
+// Neste momento esta´:
+// p2 -> p2.__proto__ === p1 -> Produto.prototype === Object
+
+const p3 = Object.create(Produto.prototype, {
+  nome: {
+    // opcional!!
+    writable: true,
+    configurable: true,
+    enumerable: true,
+    value: "calcas",
+  },
+  preco: {
+    writable: true,
+    configurable: true,
+    enumerable: true,
+    value: 100,
+  },
+}); // criar objeto logo com prototype de outro objeto
+p3.desconto(50);
+console.log(p3);

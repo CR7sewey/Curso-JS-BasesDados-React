@@ -1,0 +1,100 @@
+### Object - prototypes - herança
+
+// Camisa (cor), caneca (material)
+// ver window para percerber o proto
+
+function Produto(nome, preco) {
+  this.nome = nome;
+  this.preco = preco;
+}
+
+Produto.prototype.aumento = function (valor) {
+  this.preco += valor;
+};
+Produto.prototype.desconto = function (valor) {
+  this.preco -= valor;
+};
+
+function Camisa(nome, preco, cor = null) {
+  Produto.call(this, nome, preco); // tipo super().__init__(*args), (equivalente) new (aponta para o Objeto) dentro do Camisa
+  this.cor = cor;
+}
+// Camisa.prototype.construtor = Camisa;
+// objeto vazio setado como o Produto.prototype!!
+Camisa.prototype = Object.create(Produto.prototype); // crio objeto vazio e seto o prototype como Produto
+Camisa.prototype.constructor = Camisa; // porque senao qunado isntancio new Camisa() o construtor seria o Produto, e quem cosntruiu a camsia foi a camisa
+
+// overwrite aumento!!
+Camisa.prototype.aumento = function (valor2) {
+  this.preco += 2 * valor2;
+};
+
+const produto = new Produto("Taça", 10);
+const camisa = new Camisa("T-shirt", 20, "Preta");
+camisa.aumento(10); // vai aumentar opara 40!! pq subescrevi
+console.log(camisa, produto);
+// camisa -> Camisa.prototype (daí termos posto como construtor) -> Produto.prototype -> Object
+
+//
+function Caneca(nome, preco, material, stock) {
+  Produto.call(this, nome, preco);
+  this.material = material;
+
+  Object.defineProperty(this, "stock", {
+    enumerable: true,
+    configurable: false,
+    get: function () {
+      return stock;
+    },
+    set: function (valor) {
+      if (typeof valor !== "number") {
+        return;
+      }
+      return valor;
+    },
+  });
+}
+
+Caneca.prototype = Object.create(Produto.prototype);
+Caneca.prototype.constructor = Caneca;
+
+Caneca.prototype.desconto = function (valor2) {
+  this.preco -= valor2 * 0.5;
+};
+
+const caneca = new Caneca("Caneca1", 20, "porcelana", 5);
+caneca.desconto(10);
+console.log(caneca, caneca.stock);
+
+/**
+ O termo "Herança" é muito usado para descrever que as características de um objeto são passadas para outro objeto. Assim como uma filha ou filho pode herdar características da sua mãe ou pai (geneticamente). 
+ Por isso estamos usando esse termo para descrever o comportamento desejado. Além disso, a maioria das literaturas, incluindo as documentações (como MDN) citam a palavra herança.
+
+Vamos continuar usando o termo "Herança" até o final do curso, porém, Javascript não é uma linguagem que apresenta essa característica em específico, portanto não existe "herança" aqui. O que ocorre, na verdade, é "delegação". Esse seria o termo mais correto para descrever "Herança" em JS.
+
+Quando fazemos algo como:
+
+function Produto(nome, preco) {
+  this.nome = nome;
+  this.preco = preco;
+}
+ 
+Produto.prototype.aumento = function (quantia) {
+  this.preco += quantia;
+};
+ 
+function Camiseta(nome, preco, cor) {
+  Produto.call(this, nome, preco);
+  this.cor = cor;
+}
+Camiseta.prototype = Object.create(Produto.prototype);
+Camiseta.prototype.constructor = Camiseta;
+Mais especificamente no trecho:
+
+Camiseta.prototype = Object.create(Produto.prototype);
+Estamos, claramente, falando que o Camiseta.prototype é um novo objeto vazio que tem como protótipo Produto.prototype. Dessa forma, estamos adicionando Camiseta.prototype na cadeia de protótipos de Produto. 
+Por consequência, tudo o que não existir em Camiseta nem em Camiseta.prototype será delegado para Produto.prototype (e assim por diante até chegar no topo da cadeia de protótipos). 
+Por isso vejo o termo delegação como mais adequado para este comportamento.
+
+Novamente, vamos continuar usando o termo "Herança", mas achei que seria interessante que soubessem disso neste momento.
+ */
