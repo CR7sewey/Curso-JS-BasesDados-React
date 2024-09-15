@@ -1,0 +1,12 @@
+Essa é uma seção interessante, porque saimos do básico e começaremos a usar ferramentas do JS e Node.js (tooling). 
+Porém, tenha em mente que ferramentas como webpack e babel, raramente são usadas diretamente como vamos aprender nessa mesma seção. 
+O motivo dessas aulas existirem é educacional, apenas para podermos compreender como as coisas funcionam por baixo dos panos. 
+E para usarmos módulos do ES6 também.
+
+Vocês até podem usar essas ferramentas como vamos ver e não há nada errado com isso (muito pelo contrário), 
+mas percebo que não precisamos mais de mexer com configurações complexas e boilerplates muito grandes. 
+Um grande exemplo disso é a ferramenta "create-react-app" (que veremos mais a frente). 
+Esta ferramenta já configura webpack, babel, jest (para testes) e muitas outras coisas automaticamente para nós, 
+não chegamos nem a ver arquivos de configuração se não quisermos.
+
+Mas muita atenção: A parte de módulos é super importante e precisaremos dessas configurações para conseguir usar os módulos do ES6.
