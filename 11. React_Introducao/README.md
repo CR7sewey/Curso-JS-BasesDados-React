@@ -87,3 +87,248 @@ No terminal (pode ser o do VS Code), na pasta que queremos (cd **dir**) correr O
 
 - package-lock.json
   Um resumo de toda a árvore de dependências
+
+## Remover Codigo "Lixo"
+
+- Remover: App.test.js, logo.svg, reportWebVitals.js, setupTests.js
+- Remover: tudo o relacionado ao logo e reportWebVitals
+- Limpar todo o return da App
+- Deixar só o relevante no index.js
+
+- Nota: o index.js é como se fosse o pai da aplicação, no fundo é ele que comunica
+  diretament com o nosso html e carrega para la o "DOM". Este, vai buscar tudo à App.js,
+  e aí sim muitas vezes vamos ter as várias componentes (ESTRUTURA)
+
+- shortcuts settings/keyboard shortcuts (útil)
+
+## Primeiro Componente
+
+- criar folder components
+- criar ficheiro Agradecimento.js
+- Código:
+
+```js
+function Agradecimentos() {
+  return <h2>Olá, este é o meu primeiro componente</h2>;
+}
+
+// arrow function also works
+
+const Agradecimentos = () => {
+  return <h2>Olá, este é o meu primeiro componente</h2>;
+};
+```
+
+- como uma função em JS/Node
+- podiamos tambem fazer class components (não muito usado atualmente)
+- começa com letra maiúscula
+- tem de returnar um JSX (é um html so que escrito em JS -> mais poderoso, visto
+  que permite fazer loops, ifs entre outros)
+- Fechar sempre quando chamamos o componente <Greeting/>
+
+## Componente Padrão
+
+```js
+// imports or logic
+
+const Agradecimentos = () => {
+  return <h2>Olá, este é o meu primeiro componente</h2>;
+};
+export default Agradecimentos; // para podermos usar noutros componentes/modulos - ES6 - vamos ver mais tarde
+```
+
+## Componente Root (único)
+
+index.js
+
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+function Agradecimentos() {
+  return <h2>Olá, este é o meu primeiro componente</h2>;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<Greeting />); // ver html - injetar Agradecimentos no root do HTMl
+```
+
+## Bugs
+
+Se por alguma razão houver um erro no terminal, pode ser só uma falha no servidor
+
+```
+Module not found: Error: Can't resolve 'path/index.js'
+```
+
+Restart o servidor
+
+- CTRL + C (parar o server)
+- "npm start" (run o dev server)
+
+## Extensoes e settings.json
+
+- Auto Rename Tag
+- Highlight Matching Tag
+  - customize in settings.json
+- Prettier -> UTIL
+  - format on save
+  - format on paste
+  - Default Formatter (Prettier - Code formatter) (settings -> default formatter)
+
+settings.json
+
+```json
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": true,
+    "prettier.semi": false,
+```
+
+- Emmet (default) ex: h2.my-class
+
+settings.json
+
+```json
+"emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+```
+
+- ES7 utilidades (ES7 React/Redux/GraphQL/React-Native snippets) -> UTIL
+  - rafce (arrow function com export)
+  - rfce (regular function com export )
+  - = ao nome do file
+  - react auto import
+    - uncheck
+    - React Utilidades › Settings: Import React On Top
+
+## Primeiro Componente em Detalhe e relacao com JS/node (Vanilla JS)
+
+- Letra Capital
+- Deve returnar algo (objetivo do componente)
+- JSX syntax (returna html)
+  - torna muito mais facil e poderosa o uso do html
+  - chama uma funcao por debaixo dos panos
+
+index.js
+
+```js
+const Agradecimentos = () => {
+  return React.createElement("h2", {}, "Olá mundo"); // poderiamos fazer assim, tal como no vanilla fariamos  document.createElement('h2') ...
+};
+```
+
+```js
+function Agradecimentos() {
+  return (
+    <div>
+      <h2>Olá mundo</h2>
+    </div>
+  );
+}
+
+const Agradecimentos = () => {
+  return React.createElement(
+    "div",
+    {},
+    React.createElement("h2", {}, "Olá mundo")
+  );
+  // const div = document.createElement('div')
+  // const h2 = document.createElement('h2')
+  // h2.innerText = "Olá mundo"
+  // div.appendChild(h2)
+};
+```
+
+## Regras JSX
+
+- retornar um unico elemento (elemento pai)
+
+  - semantica: section/article
+  - Fragmento: agrupar elementos sem adicionar nodos extra
+
+```js
+return <React.Fragment>...rest of the return</React.Fragment>;
+
+// sversão curta (e melhor)
+
+return <>...rest of the return</>;
+```
+
+- Convenção de nomes: camelCase
+
+```js
+return (
+  <div tabIndex={1}>
+    <button onClick={myFunction}>click me</button>
+    <label htmlFor='name'>Name</label>
+    <input readOnly={true} id='name' />
+  </div>
+)
+// no html
+<div tabindex="1">
+    <button onclick="myFunction()">click me</button>
+    <label for='name'>Name</label>
+    <input readonly id='name' />
+</div>
+```
+
+- className em vez de class
+- onClick em vez de onclick
+- etc
+
+```js
+return <div className="valor">Ola</div>;
+```
+
+- Fechar todos os elementos
+
+```js
+return <img />;
+// ou
+return <input />;
+```
+
+- formatação
+- abrir tag na mesma linha como returno ou ()
+
+```js
+function Agradecimentos() {
+  return (
+    <>
+      <div className="valor">
+        <h3>Olá Mundo</h3>
+        <ul>
+          <li>
+            <a href="#">Olá mundo 2</a>
+          </li>
+        </ul>
+      </div>
+      <h2>Olá mundo</h2>
+      <input type="text" name="" id="" />
+    </>
+  );
+}
+```
+
+## Componentes aninhados
+
+```js
+function Agradecimentos() {
+  // Pai
+  return (
+    <div>
+      <Pessoa />
+      <Messagem />
+    </div>
+  );
+}
+
+const Pessoa = () => <h2>Cristiano Ronaldo</h2>; // Filho
+const Messagem = () => {
+  return <p>Sou o melhor do mundo!</p>;
+};
+```
