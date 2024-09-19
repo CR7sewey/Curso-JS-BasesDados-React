@@ -1,36 +1,55 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import book1 from "./images/book-1.jpg";
+
+const primeiroBook = {
+  autor: "Jordan Moore",
+  titulo: "Factos sobre a mente humana",
+  img: book1,
+};
+const segundoBook = {
+  autor: "James Clear",
+  titulo: "Atomic Habits",
+  img: "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+};
 
 function BookList() {
   return (
     <section className="booklist">
-      <Book />
-      <Book />
-      <Book />
-      <Book />
+      <Book
+        titulo={primeiroBook.titulo}
+        autor={primeiroBook.autor}
+        imagem={primeiroBook.img}
+      />
+      <Book
+        titulo={segundoBook.titulo}
+        autor={segundoBook.autor}
+        imagem={segundoBook.img}
+      />
     </section>
   );
 }
 
 export default BookList;
 
-const Book = () => {
+const Book = (props) => {
+  console.log(props);
+  const titulo = props.titulo ?? "Titulo";
   return (
     <article className="book">
-      <Imagem />
-      <Titulo />
-      <Autor />
+      <img src={props.imagem} alt="Factos sobre a mente humana" />
+      <h2>{titulo}</h2>
+      <h4>{props.autor?.toUpperCase() ?? "Autor"} </h4>
     </article>
   );
 };
 
-const Imagem = () => (
-  <img
-    src="https://images-na.ssl-images-amazon.com/images/I/71m+Qtq+HrL._AC_UL900_SR900,600_.jpg"
-    alt="Factos sobre a mente humana"
-  />
-);
+/*
+const Imagem = () => <img src={book1} alt="Factos sobre a mente humana" />;
 const Titulo = () => {
   return <h2>Factos sobre a mente humana</h2>;
 };
-const Autor = () => <h4>Jordan Moore</h4>;
+const Autor = () => (
+  <h4 style={{ color: "#617d98", fontSize: "0.75rem", marginTop: "0.5rem" }}>
+    Jordan Moore
+  </h4>
+);*/

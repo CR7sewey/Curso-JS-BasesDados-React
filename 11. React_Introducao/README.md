@@ -503,3 +503,261 @@ const Book = () => {
   font-size: 1rem;
 }
 ```
+
+## Imagens Locais
+
+- Imagens externas - basta apenas um url
+- Imagens Locais (src folder)
+
+- criar images folder em src
+- copy/paste imagem
+
+```js
+import book1 from "./images/book-1.jpg";
+
+const Imagem = () => <img src={book1} alt="Factos sobre a mente humana" />;
+```
+
+## JSX - CSS (inline styles)
+
+- {} in JSX significat introduzir variavel
+- valor é um objeto com pares chave/valor
+
+```js
+const Autor = () => (
+  <h4 style={{ color: "#617d98", fontSize: "0.75rem", marginTop: "0.5rem" }}>
+    Jordan Moore
+  </h4>
+);
+```
+
+- regras de css ainda se aplicam (inline vs external css)
+
+```css
+.book h4 {
+  /* nao funciona */
+  color: red;
+  /* funciona */
+  letter-spacing: 2px;
+}
+```
+
+- Librarias externas usam inline css (tailwind, bootstrap),
+
+- alternative option
+
+```js
+const Autor = () => {
+  const inlineHeadingStyles = {
+    color: "#617d98",
+    fontSize: "0.75rem",
+    marginTop: "0.5rem",
+  };
+  return <h4 style={inlineHeadingStyles}>Jordan Moore </h4>;
+};
+```
+
+## JSX - Javascript
+
+- Refatorar a um único componente
+
+```js
+const Book = () => {
+  return (
+    <article className="book">
+      <img src="./images/book-1.jpg" alt="Factos sobre a mente humana" />
+      <h2>Factos sobre a mente humana</h2>
+      <h4>Jordan Moore </h4>
+    </article>
+  );
+};
+```
+
+```css
+.book h4 {
+  color: #617d98;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  letter-spacing: 2px;
+}
+```
+
+- {} no JSX significa que procura uma variavel no proprio JS
+- valor interno dever ser uma expressiao (return value)
+
+```js
+const autor = "Jordan Moore";
+const Book = () => {
+  const titulo = "Interesting Facts For Curious Mindssssss";
+  return (
+    <article className="book">
+      <img
+        src="./images/book-1.jpg"
+        alt="Interesting Facts For Curious Minds"
+      />
+      <h2>{titulo}</h2>
+      <h4>{autor.toUpperCase()} </h4>
+      {/* COMENTARIO */}
+      <p>{6 + 6}</p>
+    </article>
+  );
+};
+```
+
+## Props - Initial Setup
+
+- refactorar
+
+```js
+const autor = "Jordan Moore";
+const titulo = "Factos sobre a mente humana";
+
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book />
+      <Book />
+    </section>
+  );
+}
+const Book = () => {
+  return (
+    <article className="book">
+      <img src={img} alt={title} />
+      <h2>{title}</h2>
+      <h4>{author} </h4>
+    </article>
+  );
+};
+```
+
+```js
+// parameters
+const someFunc = (param1, param2) => {
+  console.log(param1, param2);
+};
+// arguments
+someFunc("trabalho", "developer");
+```
+
+```js
+const Book = (props) => {
+  console.log(props);
+  return (
+    <article className="book">
+      <img src={img} alt={titulo} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+      {console.log(props)}
+    </article>
+  );
+};
+```
+
+- objeto props (convençao)
+
+- passar como pares chave/valor
+- se o prop existir vai returnar um valor, senao nenhum valor
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book job="developer" />
+      <Book title="random title" number={22} />
+    </section>
+  );
+}
+const Book = (props) => {
+  console.log(props);
+  return (
+    <article className="book">
+      <img src={img} alt={title} />
+      <h2>{title}</h2>
+      <h4>{author} </h4>
+      <p>{props.job}</p>
+      <p>{props.title}</p>
+      <p>{props.number}</p>
+    </article>
+  );
+};
+```
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book
+        titulo="Factos sobre a mente humana"
+        autor="Jordan Moore"
+        imagem={book1}
+        numero={12}
+      />
+      <Book />
+    </section>
+  );
+}
+
+export default BookList;
+
+const Book = (props) => {
+  const titulo = props.titulo ?? "Titulo";
+  return (
+    <article className="book">
+      <img src={props.imagem} alt="Factos sobre a mente humana" />
+      <h2>{titulo}</h2>
+      <h4>{props.autor?.toUpperCase() ?? "Autor"} </h4>
+      {/* COMENTARIO */}
+      <p>{props.numero}</p>
+    </article>
+  );
+};
+```
+
+## Props - Setup dinamico
+
+- Vamos supor que iamos buscar os dados a uma base de dados, ou algo do tipo.
+- No caso vamos contruir um array de objetos com os dados!
+
+```js
+const primeiroBook = {
+  autor: "Jordan Moore",
+  titulo: "Factos sobre a mente humana",
+  img: book1,
+};
+const segundoBook = {
+  autor: "James Clear",
+  titulo: "Atomic Habits",
+  img: "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+};
+
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book
+        titulo={primeiroBook.titulo}
+        autor={primeiroBook.autor}
+        imagem={primeiroBook.img}
+        numero={12}
+      />
+      <Book
+        titulo={segundoBook.titulo}
+        autor={segundoBook.autor}
+        imagem={segundoBook.img}
+        numero={12}
+      />
+    </section>
+  );
+}
+const Book = (props) => {
+  console.log(props);
+  const titulo = props.titulo ?? "Titulo";
+  return (
+    <article className="book">
+      <img src={props.img} alt={props.title} />
+      <h2>{props.title}</h2>
+      <h4>{props.author} </h4>
+    </article>
+  );
+};
+```
