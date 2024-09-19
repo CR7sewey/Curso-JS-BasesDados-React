@@ -332,3 +332,174 @@ const Messagem = () => {
   return <p>Sou o melhor do mundo!</p>;
 };
 ```
+
+- Portanto a ideia dos componentes é ter um component principal (App) que aninha
+  outros componentes que consequentemente podem aninhar outros e assim sucessivamente!
+- injetamos este DOM na div do index.html (id root)
+
+## React Developer Tool
+
+- instalar extensao no browser
+- ver Components no navegador
+
+# Primeiro Projeto - Melhores Vendas Amazon
+
+## Lista de Livros/BookList
+
+- estrutura: depois vamos restruturar
+
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+function BookList() {
+  return (
+    <section>
+      <Book />
+      <Book />
+      <Book />
+      <Book />
+    </section>
+  );
+}
+
+export default BookList;
+
+const Book = () => {
+  return (
+    <article>
+      <Imagem />
+      <Titulo />
+      <Autor />
+    </article>
+  );
+};
+
+const Imagem = () => <h2>imagem</h2>;
+const Titulo = () => {
+  return <h2>Titulo do Livro</h2>;
+};
+const Autor = () => <h4>Autor</h4>;
+```
+
+- No index.js colocar root.render(<BookList />);
+
+- Pesquisar no browser - 'amazon best selling books'
+  [Amazon Best Sellers](https://www.amazon.com/Best-Sellers-Books/zgbs/books/)
+- escolher um livro
+- copiar imagem, titulo e autor
+
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+function BookList() {
+  return (
+    <section>
+      <Book />
+      <Book />
+      <Book />
+      <Book />
+    </section>
+  );
+}
+
+const Book = () => {
+  return (
+    <article className="book">
+      <Imagem />
+      <Titulo />
+      <Autor />
+    </article>
+  );
+};
+
+const Imagem = () => (
+  <img
+    src="https://images-na.ssl-images-amazon.com/images/I/71m+Qtq+HrL._AC_UL900_SR900,600_.jpg"
+    alt="Factos sobre a mente humana"
+  />
+);
+const Titulo = () => {
+  return <h2>Factos sobre a mente humana</h2>;
+};
+const Autor = () => <h4>Jordan Moore</h4>;
+```
+
+## CSS
+
+- "criar" index.css no src
+
+```css
+* {
+  /* toda o html */
+  margin: 0; /* margem */
+  padding: 0; /* padding */
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #f1f5f8;
+  color: #222;
+}
+```
+
+- importar css file e adicionar classes
+
+```js
+import "./index.css";
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book />
+      <Book />
+      <Book />
+      <Book />
+    </section>
+  );
+}
+
+const Book = () => {
+  return (
+    <article className="book">
+      <Imagem />
+      <Titulo />
+      <Autor />
+    </article>
+  );
+};
+```
+
+- todo o css
+
+```css
+.booklist {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 5rem auto;
+  display: grid;
+  gap: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .booklist {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.book {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+.book img {
+  width: 100%;
+  object-fit: cover;
+}
+.book h2 {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+```
