@@ -761,3 +761,53 @@ const Book = (props) => {
   );
 };
 ```
+
+## Aceder aos Props - Várias Abordagens
+
+- Destruturar (objeto)
+  [JS Nuggets - Destructuring (object)](https://www.youtube.com/watch?v=i4vhNKihfto&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=8&t=1s)
+
+- destruturar como no Vanilla JS
+- puxar as propriedades
+- nao é preciso referenciar o objeto
+
+```js
+const pessoa = {
+  nome: "Miguel",
+  trabalho: "developer",
+  localizacao: "Coimbra",
+};
+
+console.log(pessoa.nome);
+const { nome, trabalho } = pessoa;
+console.log(trabalho);
+```
+
+- destruturar dentro do componente
+
+```js
+const Book = (props) => {
+  const { imagem, titulo, autor } = props;
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+- destruturar em parametro de funcao (props)
+
+```js
+const Book = ({ imagem, titulo, autor }) => {
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```

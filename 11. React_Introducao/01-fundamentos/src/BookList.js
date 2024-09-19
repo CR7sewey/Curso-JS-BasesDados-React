@@ -31,14 +31,12 @@ function BookList() {
 
 export default BookList;
 
-const Book = (props) => {
-  console.log(props);
-  const titulo = props.titulo ?? "Titulo";
+const Book = ({ titulo, autor, imagem }) => {
   return (
     <article className="book">
-      <img src={props.imagem} alt="Factos sobre a mente humana" />
+      <img src={imagem} alt="Factos sobre a mente humana" />
       <h2>{titulo}</h2>
-      <h4>{props.autor?.toUpperCase() ?? "Autor"} </h4>
+      <h4>{autor} </h4>
     </article>
   );
 };
