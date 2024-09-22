@@ -56,3 +56,7 @@ body {
   margin-top: 0.5rem;
   letter-spacing: 2px;
 }
+
+.book p {
+  margin: 1rem 0 0.5rem;
+}

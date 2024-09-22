@@ -1,5 +1,6 @@
 import React from "react";
 import book1 from "./images/book-1.jpg";
+import books from "./books";
 
 const primeiroBook = {
   autor: "Jordan Moore",
@@ -13,30 +14,33 @@ const segundoBook = {
 };
 
 function BookList() {
+  const getBook = (id) => {
+    const book = books.find((book) => book.id === id);
+    console.log(book);
+  };
   return (
     <section className="booklist">
-      <Book
-        titulo={primeiroBook.titulo}
-        autor={primeiroBook.autor}
-        imagem={primeiroBook.img}
-      />
-      <Book
-        titulo={segundoBook.titulo}
-        autor={segundoBook.autor}
-        imagem={segundoBook.img}
-      />
+      {books.map((values, index) => {
+        return <Book {...values} getBook={getBook} key={values.id} />;
+      })}
     </section>
   );
 }
 
 export default BookList;
 
-const Book = ({ titulo, autor, imagem }) => {
+const Book = (props) => {
+  const { imagem, titulo, autor, getBook, id } = props;
+  // console.log(props);
+  const getSingleBook = () => {
+    getBook(id);
+  };
   return (
     <article className="book">
-      <img src={imagem} alt="Factos sobre a mente humana" />
+      <img src={imagem} alt={titulo} />
       <h2>{titulo}</h2>
-      <h4>{autor} </h4>
+      <button onClick={getSingleBook}>{titulo}</button>
+      <h4>{autor}</h4>
     </article>
   );
 };

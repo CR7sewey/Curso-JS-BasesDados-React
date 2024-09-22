@@ -811,3 +811,687 @@ const Book = ({ imagem, titulo, autor }) => {
   );
 };
 ```
+
+## Children Prop
+
+- tudo o que renderizamos entre componentes
+- Basicamente é o equivalente a passar um JSX como props
+- melhorar isto - Context API e Redux
+- pode ser colocado em qualquer lugar do JSX
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      <Book
+        autor={firstBook.author}
+        titulo={firstBook.title}
+        imagem={firstBook.img}
+      >
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
+          repudiandae inventore eos qui animi sed iusto alias eius ea sapiente.
+        </p>
+        <button>click me</button>
+      </Book>
+      <Book
+        autor={secondBook.author}
+        tituço={secondBook.title}
+        image={secondBook.img}
+      />
+    </section>
+  );
+}
+
+const Book = ({ imagem, titulo, autor, children }) => {
+  // rest of the logic
+};
+const Book = (props) => {
+  const { imagem, titulo, autor, children } = props;
+  console.log(props);
+  return (
+    <article className="book">
+      <img src={imagem} alt={title} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+      {children}
+    </article>
+  );
+};
+```
+
+```css
+@media screen and (min-width: 768px) {
+  .booklist {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+}
+.book p {
+  margin: 1rem 0 0.5rem;
+}
+```
+
+## Lista Simples
+
+- [Javascript Nuggets - Map ](https://www.youtube.com/watch?v=80KX6aD9R7M&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=1)
+
+- refatorar
+
+```js
+const books = [
+  {
+    autor: "Jordan Moore",
+    titulo: "Factos sobre a mente humana",
+    imagem: book1,
+  },
+  {
+    autor: "James Clear",
+    titulo: "Atomic Habits",
+    imagem:
+      "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+  },
+];
+
+function BookList() {
+  return <section className="booklist"></section>;
+}
+
+const Book = (props) => {
+  const { imagem, titulo, autor } = props;
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+- nao da para renderizar objetos diretamente no React
+
+```js
+function BookList() {
+  return <section className="booklist">{books}</section>;
+}
+```
+
+- map - cria um array chamando uma funcao para cada elemento do array.
+
+```js
+const nomes = ["Miguel", "João", "Ronaldo"];
+const novosNomes = nomes.map((nome) => {
+  console.log(nome);
+  return <h1>{nome}</h1>;
+});
+
+function BookList() {
+  return <section className="booklist">{novosNomes}</section>;
+}
+```
+
+## Lista Correta
+
+- remove names and newNames
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        console.log(book);
+        return (
+          <div>
+            <h2>{book.title}</h2>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+```
+
+- renderizar componente
+- passar propriedades uma por uma
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        console.log(book);
+        const { imagem, titulo, autor } = book;
+        return <Book imagem={imagem} titulo={titulo} autor={autor} />;
+      })}
+    </section>
+  );
+}
+```
+
+- ou então <Book {...book} />
+
+## Key Prop
+
+- normalmente é o id
+
+```js
+const books = [
+  {
+    autor: "Jordan Moore",
+    titulo: "Factos sobre a mente humana",
+    imagem: book1,
+  },
+  {
+    autor: "James Clear",
+    titulo: "Atomic Habits",
+    imagem:
+      "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+  },
+];
+
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        console.log(book);
+        const { imagem, titulo, autor, id } = book;
+        return <Book book={book} key={id} />;
+      })}
+    </section>
+  );
+}
+```
+
+- vocês vão ver o indice, mas não é avisado se a lista está a mudar
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book, index) => {
+        console.log(book);
+        const { imagem, titulo, autor, id } = book;
+        return <Book book={book} key={index} />;
+      })}
+    </section>
+  );
+}
+```
+
+## Passar o objeto inteiro
+
+- renderizar componente
+- passar o objeto inteiro
+- Desestruturar (objecto)
+  [JS Nuggets - Destructuring (object)](https://www.youtube.com/watch?v=i4vhNKihfto&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=8&t=1s)
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        console.log(book);
+        const { imagem, titulo, autor } = book;
+        return <Book book={book} />;
+      })}
+    </section>
+  );
+}
+
+const Book = (props) => {
+  const { imagem, titulo, autor } = props.book;
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{title}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+- alternativa
+
+```js
+const Book = ({ book: { imagem, titulo, autor } }) => {
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+## Como eu prefiro!
+
+- usar o opreador spread (...) - copiar valores
+- Spread Operator
+- [JS Nuggets - Spread Operator](https://www.youtube.com/watch?v=4Zyr5a3m0Fc&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=10)
+
+```js
+const nomes = ["Miguel", "João", "Ronaldo"];
+const novosNomes = [...nomes, "Maria"];
+console.log(nomes);
+console.log(novosNomes);
+const umObjecto = {
+  nome: "Miguel",
+  trabalhador: "developer",
+};
+// COPY NOT A REFERENCE !!!!
+const novoObjecto = { ...umObjecto, localizacao: "Coimbra" };
+console.log(umObjecto);
+console.log(novoObjecto);
+```
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        return <Book {...book} key={book.id} />;
+      })}
+    </section>
+  );
+}
+
+const Book = (props) => {
+  const { imagem, titulo, autor } = props;
+  return (
+    <article className="book">
+      <img src={imagem} alt={title} />
+      <h2>{titulo}</h2>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+const Book = ({ img, title, author }) => {
+  // resto do codigo
+};
+```
+
+## Events - Fundamentos
+
+- Vanilla JS
+
+```js
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", function (e) {
+  // aceder ao evento no objeto
+  // fazer algo quando o evento dispara
+});
+```
+
+- abordagem semelhante
+- elemento, evento, funcao
+
+```js
+const EventExamples = () => {
+  const lidarComClique = () => {
+    alert("lidar com botao");
+  };
+  return (
+    <section>
+      <button onClick={lidarComClique}>click me</button>
+    </section>
+  );
+};
+```
+
+- [React Events](https://reactjs.org/docs/events.html)
+- ideia semelhante à outra
+- mais comum
+  - onClick (click events)
+  - onSubmit (submit form)
+  - onChange (input change )
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      <EventosExemplos />
+      {books.map((book) => {
+        return <Book {...book} key={book.id} />;
+      })}
+    </section>
+  );
+}
+
+const EventosExemplos = () => {
+  const formInput = () => {
+    console.log("handle form input");
+  };
+  const botaoClick = () => {
+    alert("handle button click");
+  };
+  return (
+    <section>
+      <form>
+        <h2>Forma Tipica</h2>
+        <input
+          type="text"
+          name="example"
+          onChange={formInput}
+          style={{ margin: "1rem 0" }}
+        />
+      </form>
+      <button onClick={botaoClick}>click me</button>
+    </section>
+  );
+};
+```
+
+## Evento Objeto e Submissao de Formularios
+
+```js
+const EventosExemplos = () => {
+  const formInput = (e) => {
+    console.log(e);
+    // e.target - element
+    console.log(`Input Name : ${e.target.name}`);
+    console.log(`Input Value : ${e.target.value}`);
+    // console.log('handle form input');
+  };
+  const botaoClick = () => {
+    alert("handle button click");
+  };
+  const formSubmissao = (e) => {
+    e.preventDefault();
+    console.log("form submitted");
+  };
+  return (
+    <section>
+      {/* add onSubmit Event Handler */}
+      <form onSubmit={formSubmissao}>
+        <h2>Typical Form</h2>
+        <input
+          type="text"
+          name="example"
+          onChange={formInput}
+          style={{ margin: "1rem 0" }}
+        />
+        {/* add button with type='submit' */}
+        <button type="submit">submit form</button>
+      </form>
+      <button onClick={botaoClick}>click me</button>
+    </section>
+  );
+};
+```
+
+- Form Alternativa
+
+```js
+<button type="submit" onClick={formSubmissao}>
+  submit form
+</button>
+```
+
+## Alternativa
+
+- abordagem alternativa
+- passar uma funcao anonima (arrow function)
+- menos código
+
+```js
+const EventosExemplos = () => {
+  return (
+    <section>
+      <button onClick={() => console.log("Ola!")}>click me</button>
+    </section>
+  );
+};
+```
+
+- podemos tambem aceder ao objeto de evento
+
+```js
+const EventosExemplos = () => {
+  return (
+    <section>
+      <form>
+        <h2>Typical Form</h2>
+        <input
+          type="text"
+          name="example"
+          onChange={(e) => console.log(e.target.value)}
+          style={{ margin: "1rem 0" }}
+        />
+      </form>
+      <button onClick={() => console.log("you clicked me")}>click me</button>
+    </section>
+  );
+};
+```
+
+## Prop Drilling
+
+- Flow de data no React - Podemos apenas passar props de pai para filhos
+- alternativas: Context API, Redux, outras bibliotecas de estado
+
+```js
+function BookList() {
+  const algumValor = "MiguelERonaldo";
+  const mostrarValor = () => {
+    console.log(algumValor);
+  };
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        return <Book {...book} key={book.id} mostrarValor={mostrarValor} />;
+      })}
+    </section>
+  );
+}
+
+const Book = (props) => {
+  const { imagem, titulo, autor, mostrarValor } = props;
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <button onClick={mostrarValor}>click me</button>
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+## Exemplo mais complexo
+
+- initial setup
+- criar getBook function no booklist
+- aceita id como um argumento e acha o livro
+- [Javascript Nuggets - Filter and Find](https://www.youtube.com/watch?v=KeYxsev737s&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=4)
+- passar a funcao para o componente Book e invocar no botao
+- no componente Book destrutarar id e funcao
+- invocar a funcao quando o utilizador clica no botao, passar o id
+- objetivo: ver o mesmo livro na consola
+
+```js
+const BookList = () => {
+  const getBook = (id) => {
+    const book = books.find((book) => book.id === id);
+    console.log(book);
+  };
+
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        return <Book {...book} key={book.id} getBook={getBook} />;
+      })}
+    </section>
+  );
+};
+
+const Book = (props) => {
+  const { imagem, titulo, autor, getBook, id } = props;
+  // console.log(props);
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      {/* nao vai funcionar pois estamos a executar a funcao e nao a passar uma referencia */}
+      <button onClick={getBook(id)}>{titulo}</button>
+      <h4>{autor}</h4>
+    </article>
+  );
+};
+```
+
+- correcao: opcao 1
+- primeira opcao - montar um wrapper (getSingleBook)
+
+```js
+const Book = (props) => {
+  const { imagem, titulo, autor, getBook, id } = props;
+  // console.log(props);
+  const getSingleBook = () => {
+    getBook(id);
+  };
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <button onClick={getSingleBook}>{titulo}</button>
+      <h4>{autor}</h4>
+    </article>
+  );
+};
+```
+
+- correcao: opcao 1
+- segunda opcao - montar um wrapper como funcao anonima
+
+```js
+const Book = (props) => {
+  const { imagem, titulo, autor, getBook, id } = props;
+  // console.log(props);
+  const getSingleBook = () => {
+    getBook(id);
+  };
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+      <button onClick={() => getBook(id)}>{titulo}</button>
+      <h4>{autor}</h4>
+    </article>
+  );
+};
+```
+
+## Import and Export
+
+- remover todo o código de getBook
+
+```js
+function BookList() {
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        return <Book {...book} key={book.id} />;
+      })}
+    </section>
+  );
+}
+
+const Book = (props) => {
+  const { imagem, titulo, autor } = props;
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+```
+
+- criar dois ficheiros no src (books.js e Book.js)
+- cortar o array de books do index.j
+- adicionar a books.js
+
+books.js
+
+```js
+const books = [
+  {
+    author: "Jordan Moore",
+    title: "Interesting Facts For Curious Minds",
+    img: "./images/book-1.jpg",
+    id: 1,
+  },
+  {
+    author: "James Clear",
+    title: "Atomic Habits",
+    img: "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+    id: 2,
+  },
+];
+```
+
+- Duas formas de exportar:
+
+  - com nomes exportados então nomes devem fazer match
+  - com exports default, podemos renomear mas apenas um por file
+
+- nomes exportados
+
+```js
+export const books = [
+  {
+    id: 1,
+    autor: "Jordan Moore",
+    titulo: "Factos sobre a mente humana",
+    imagem: book1,
+  },
+  {
+    id: 2,
+    autor: "James Clear",
+    titulo: "Atomic Habits",
+    imagem:
+      "https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL._AC_UL900_SR900,600_.jpg",
+  },
+];
+```
+
+index.js
+
+```js
+import { books } from "./books";
+```
+
+- Export default
+
+```js
+const Book = (props) => {
+  const { imagem, titulo, autor } = props;
+
+  return (
+    <article className="book">
+      <img src={imagem} alt={titulo} />
+      <h2>{titulo}</h2>
+
+      <h4>{autor} </h4>
+    </article>
+  );
+};
+
+export default Book;
+```
+
+index.js
+
+```js
+import Book from "./Book";
+```
