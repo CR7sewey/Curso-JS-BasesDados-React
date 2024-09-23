@@ -1495,3 +1495,138 @@ index.js
 ```js
 import Book from "./Book";
 ```
+
+## Imagens Locais (src/images folder)
+
+- melhor performance
+- adicionar mais um book ao array
+- meter iamgens na pasta de imagens (src/images)
+- import as 3 imagens no book.js
+- cada imagem requer um novo import
+
+```js
+import image1 from "./images/book-1.jpg";
+import image2 from "./images/book-2.jpg";
+import image3 from "./images/book-3.jpg";
+
+const books = [
+  {
+    id: 1,
+    autor: "Jordan Moore",
+    titulo: "Factos sobre a mente humana",
+    imagem: image1,
+  },
+  {
+    id: 2,
+    autor: "James Clear",
+    titulo: "Atomic Habits",
+    imagem: image2,
+  },
+  {
+    id: 3,
+    autor: "Stephen King",
+    titulo: "Fairy Tale",
+    imagem: image3,
+  },
+];
+export default books;
+```
+
+## Desafios
+
+### Criar Numeros
+
+- criar numeros
+- nao se preocupem com css
+- pist - utilizar ou id ou o index (segundo argumento do map)!
+
+index.js
+
+```js
+const BookList = () => {
+  return (
+    <section className="booklist">
+      {books.map((book, index) => {
+        return <Book {...book} key={book.id} number={index} />;
+      })}
+    </section>
+  );
+};
+
+const Book = (props) => {
+  const { i, title, author, number } = props;
+
+  return (
+    <article className="book">
+      <img src={img} alt={title} />
+      <h2>{title}</h2>
+
+      <h4>{author}</h4>
+      <span className="number">{`# ${number + 1}`}</span>
+    </article>
+  );
+};
+```
+
+index.css
+
+```css
+.book {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  /* set relative */
+  position: relative;
+}
+
+.number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-top-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  background: #c35600;
+  color: #fff;
+}
+```
+
+### Adicionar Titulo
+
+- adicionar um titulo à nossa app (css opcional)
+- mudar titulo da pagina (<h1>amazon best sellers</h1>)
+
+BookList.js
+
+```js
+function BookList() {
+  return (
+    <>
+      <h1>amazon melhores vendas</h1>
+      <section className="booklist">
+        {books.map((book) => {
+          return <Book {...book} key={book.id} />;
+        })}
+      </section>
+    </>
+  );
+}
+```
+
+index.css
+
+```css
+h1 {
+  text-align: center;
+  margin-top: 4rem;
+  text-transform: capitalize;
+}
+```
+
+public/index.html
+
+```html
+<title>Melhores Vendas</title>
+```

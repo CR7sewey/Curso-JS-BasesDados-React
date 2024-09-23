@@ -19,18 +19,28 @@ function BookList() {
     console.log(book);
   };
   return (
-    <section className="booklist">
-      {books.map((values, index) => {
-        return <Book {...values} getBook={getBook} key={values.id} />;
-      })}
-    </section>
+    <>
+      <h1>amazon melhores vendas</h1>
+      <section className="booklist">
+        {books.map((values, index) => {
+          return (
+            <Book
+              {...values}
+              getBook={getBook}
+              key={values.id}
+              number={index}
+            />
+          );
+        })}
+      </section>
+    </>
   );
 }
 
 export default BookList;
 
 const Book = (props) => {
-  const { imagem, titulo, autor, getBook, id } = props;
+  const { imagem, titulo, autor, getBook, id, number } = props;
   // console.log(props);
   const getSingleBook = () => {
     getBook(id);
@@ -39,8 +49,9 @@ const Book = (props) => {
     <article className="book">
       <img src={imagem} alt={titulo} />
       <h2>{titulo}</h2>
-      <button onClick={getSingleBook}>{titulo}</button>
+      {/*<button onClick={getSingleBook}>{titulo}</button>*/}
       <h4>{autor}</h4>
+      <span className="number">{`#${number + 1} Book`}</span>
     </article>
   );
 };
