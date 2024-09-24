@@ -224,3 +224,29 @@ import { linksPagina } from "../data";
 ```
 
 - com isto reduzimos muito o código!
+
+## Nav Icons (social-links)
+
+- repetir os mesmos passos
+- adicionar rel='noreferrer'
+
+```js
+export const socialLinks = [
+  { id: 1, href: "https://www.facebook.com", icon: "fab fa-facebook" },
+  { id: 2, href: "https://www.twitter.com", icon: "fab fa-twitter" },
+  { id: 3, href: "https://www.instagram.com", icon: "fab fa-instagram" },
+];
+
+{
+  socialLinks.map((link) => {
+    const { id, href, icon } = link;
+    return (
+      <li key={id}>
+        <a href={href} target="_blank" rel="noreferrer" className="nav-icon">
+          <i className={icon}></i>
+        </a>
+      </li>
+    );
+  });
+}
+```
