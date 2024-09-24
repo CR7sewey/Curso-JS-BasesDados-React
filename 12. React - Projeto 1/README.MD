@@ -124,3 +124,20 @@ export default App;
   - refatorar para <React.Fragment> ou <></>
   - copy/paste todo o conteudo dentro da body tag, exceto <script> (index.html no material)
   - selecionar todas as innstacias "class" e refatorar para "className" (CMD + D) ou (CTRL+F)
+
+## Montar Componentes
+
+- no src criar pasta de componentes
+- nos componentes criar os seguintes ficheiros
+  - Navbar.jsx
+  - Hero.jsx
+  - About.jsx
+  - Services.jsx
+  - Tours.jsx
+  - Footer.jsx
+- montar componentes com default export (comando util - rafce)
+- cuidado ao mover o código do App.jsx para os components
+- App.js deve ficar vazio
+- importar e renderizar todos os componentess no App.js
+- resultado é o mesmo, mas mais fácil de manusear o código
+  Cada um pode dividir o código como preferir, este é só o padrão
