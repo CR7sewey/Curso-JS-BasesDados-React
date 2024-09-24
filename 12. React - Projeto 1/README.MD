@@ -141,3 +141,86 @@ export default App;
 - importar e renderizar todos os componentess no App.js
 - resultado é o mesmo, mas mais fácil de manusear o código
   Cada um pode dividir o código como preferir, este é só o padrão
+
+## Navbar
+
+- primeiro vamos consertar a imagem (logo.svg)
+  - montar import from images
+
+```js
+// import
+import logo from "../images/logo.svg";
+
+// JSX
+<img src={logo} className="nav-logo" alt="backroads" />;
+```
+
+## Smooth Scroll
+
+- html/css feature
+
+testar scroll antes de implementar - clicar em Services na Navbar
+
+```html
+<!-- link - o # representa o id - se clicar-mos nesta tag ele vai para a section que tem como id services  -->
+<a href="#services"> services </a>
+<!-- elemento -->
+<section id="services"></section>
+```
+
+- adicionar ao css para ter um scroll mais suave (já está adicionado!)
+- testar remover do css
+
+```css
+html {
+  scroll-behavior: smooth;
+}
+.section {
+  /* navbar height */
+  scroll-margin-top: 4rem;
+}
+```
+
+## Pagina - Links
+
+- refatorar codigo repetido!
+
+```js
+<li>
+  <a href="#home" className="nav-link">
+    home
+  </a>
+</li>
+```
+
+- Descubram qual data se está a repetir (pista - href, texto)
+- no src criar data.js e criar uma estrutura
+  - (prista - [{property:value},{property:value}])
+- export/import e iterar sobre a lista, returnar elementos e injetar a data
+
+```js
+export const linksPagina = [
+  { id: 1, href: "#home", text: "home" },
+  { id: 2, href: "#about", text: "about" },
+  { id: 3, href: "#services", text: "services" },
+  { id: 4, href: "#tours", text: "tours" },
+];
+```
+
+```js
+import { linksPagina } from "../data";
+
+{
+  linksPagina.map((link) => {
+    return (
+      <li key={link.id}>
+        <a href={link.href} className="nav-link">
+          {link.text}
+        </a>
+      </li>
+    );
+  });
+}
+```
+
+- com isto reduzimos muito o código!
