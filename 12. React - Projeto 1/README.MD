@@ -19,7 +19,7 @@
 
 ## Instalação
 
-- Instalar React e dependencias
+- Instalar Vite e dependencias
 
 ```sh
 cd **diretoria**
@@ -32,3 +32,95 @@ npm install
 ```sh
 npm run dev
 ```
+
+## Ver código boilerplate - src folder
+
+- main.js
+
+```js
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+// css (styles) (nromalmente global global)
+import "./index.css";
+
+// DOM importado para o html - nossa componente root, onde todos os componentes
+// se vão encontrar!
+import App from "./App";
+
+// StrictMode
+
+// StrictMode é uma ferramenta para destacar problemas potenciais na aplicacao.
+// Ativa checkagem adicional e avisos. Apenas funciona em desenvolvimento, não
+// impacta em produção/build. Renderiza x2 (meter console.log e ver que gera 2 prints). Removivel.
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+
+// Se quisermos medir a performance da app, podemos passar a funcao (por exemplo: reportWebVitals(console.log))
+// Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
+- cuidado com os vários css files
+- todos eles vao ser como se fundidos ao passar para o html geral
+- ou seja o css nao esta fechado num escopo, ou a um componente especifico (tailwind css resolver isto p.e.)
+
+App.js
+
+```js
+function App() {
+  return <h1>aventuras app</h1>;
+}
+
+export default App;
+```
+
+- remover
+  - remover react.svg e vite.svg
+  - App.css
+
+## Estrutura do projeto
+
+- ./index.html
+
+  - mudar o titulo
+  - copy/paste font-awesome - biblioteca de icons (há outras! - podia ser instalado pelo npm i ...)
+
+```html
+<!-- font-awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+  integrity="sha512-c93ifPoTvMdEJH/rKIcBx//AL1znq9+4/RmMGafI/vnTFe/dKwnn1uoeszE2zJBQTS1Ck5CqSBE+34ng2PthJg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+```
+
+- index.css
+
+  - copy/paste css - (material)
+  - erro na linha 209, comentar por enquanto
+
+```css
+@media screen and (min-width: 768px) {
+  /* .hero {
+    background: linear-gradient(rgb(44, 174, 186, 0.7), rgba(0, 0, 0, 0.7)),
+      url('../images/main.jpeg') center/cover no-repeat;
+  } */
+}
+```
+
+- src folder
+
+  - copy/paste images folder (material)
+  - colocar favicon.ico no public e no html (<link rel="icon" type="image/svg+xml+ico" href="./public/favicon.ico" />)
+
+- App.js
+  - refatorar para <React.Fragment> ou <></>
+  - copy/paste todo o conteudo dentro da body tag, exceto <script> (index.html no material)
+  - selecionar todas as innstacias "class" e refatorar para "className" (CMD + D) ou (CTRL+F)
