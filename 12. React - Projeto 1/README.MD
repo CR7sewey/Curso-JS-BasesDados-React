@@ -250,3 +250,59 @@ export const socialLinks = [
   });
 }
 ```
+
+## Hero
+
+- mudar o titulo ou texto (ex: Bem vindo!; ex: Isto é uma pagina que estamos a criar num curso de React!)
+- corrigir a imagem (no css)
+
+```css
+.hero {
+    background: linear-gradient(rgb(44, 174, 186, 0.7), rgba(0, 0, 0, 0.7)),
+      url("./images/main.jpeg") center/cover no-repeat;
+  }*/
+```
+
+## About
+
+- corrigir a imagem (pista - como fizemos no logo da navbar)
+
+```jsx
+import about from "../images/about.jpeg";
+...
+<div className="about-img">
+          <img src={about} className="about-photo" alt="awesome beach" />
+</div>
+```
+
+## Section Title
+
+- nos componentes criar Title.jsx (pois repete-se, podemos poupar código!)
+- estrura de outra secção
+- inserir dois props {titulo, subTitulo}
+- substitui em About, Services, Tours
+
+```js
+const Title = ({ titulo, subTitulo }) => {
+  return (
+    <div className="section-title">
+      <h2>
+        {titulo} <span>{subTitulo}</span>
+      </h2>
+    </div>
+  );
+};
+export default Title;
+```
+
+About.js
+
+```js
+// import
+import Title from "./Title";
+
+// display
+<Title titulo="about" subTitulo="us" />;
+```
+
+repetir para Services e Tours
