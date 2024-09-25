@@ -553,3 +553,54 @@ export default PageLinks;
 ```js
 <PageLinks classPai="footer-links" classItem="footer-link" />
 ```
+
+## Desafio final
+
+- criar mais componentes (ou seja achar padroes no código que possam ser divdidos)
+- achar todos esses metodos e mover elementos para components sparadados
+- No final, devemos ter mais 4 componentes
+
+  - Tour.jsx
+  - Service.jsx
+  - SocialLink.jsx
+  - PageLink.jsx
+
+- Tour.jsx
+
+```js
+{
+  tours.map((tour) => {
+    return <Tour tour={tour} key={tour.id} />;
+  });
+}
+```
+
+- Service.jsx
+
+```js
+{
+  services.map((servicos) => {
+    return <Service {...servicos} key={servicos.id} />;
+  });
+}
+```
+
+- PageLink.jsx
+
+```js
+{
+  pageLinks.map((link) => {
+    return <PageLink key={link.id} link={link} itemClass={itemClass} />;
+  });
+}
+```
+
+- SocialLink.jsx
+
+```js
+{
+  socialLinks.map((link) => {
+    return <SocialLink key={link.id} {...link} itemClass="footer-icon" />;
+  });
+}
+```
