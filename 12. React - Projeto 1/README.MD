@@ -517,6 +517,31 @@ export default Footer;
 - importar linksPagina
 - returnar a lista inteira e substituir na Navbar e Footer
 
+- PageLinks.jsx
+
+```js
+import { linksPagina } from "../data";
+
+function PageLinks({ classPai, classItem }) {
+  return (
+    <ul className={classPai} id="nav-links">
+      {linksPagina.map((link) => {
+        const { id, href, text } = link;
+        return (
+          <li key={id}>
+            <a href={href} className={classItem}>
+              {text}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+export default PageLinks;
+```
+
 - Navbar.jsx
 
 ```js
