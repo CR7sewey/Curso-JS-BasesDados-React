@@ -1,20 +1,12 @@
 import React from "react";
 import { linksPagina, socialLinks } from "../data";
+import PageLinks from "./PageLinks";
 
 function Footer() {
   return (
     <footer className="section footer">
-      <ul className="footer-links">
-        {linksPagina.map((links) => {
-          return (
-            <li key={links.id}>
-              <a href={links.href} className="footer-link">
-                {links.text}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <PageLinks classPai="footer-links" classItem="footer-link" />
+
       <ul className="footer-icons">
         {socialLinks.map((links) => {
           return (

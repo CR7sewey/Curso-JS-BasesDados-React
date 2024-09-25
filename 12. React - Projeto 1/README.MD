@@ -508,3 +508,23 @@ function Footer() {
 
 export default Footer;
 ```
+
+## Abordagem alternativa
+
+- Podemos ainda otimizar mais isto: se formos a ver bem, temos vários sitios em que
+  fazemos a renderização dos links da página (Footer e Navbar)
+- Nos componentes criar PageLinks.jsx
+- importar linksPagina
+- returnar a lista inteira e substituir na Navbar e Footer
+
+- Navbar.jsx
+
+```js
+<PageLinks classPai="nav-links" classItem="nav-link" />
+```
+
+- Footer.jsx
+
+```js
+<PageLinks classPai="footer-links" classItem="footer-link" />
+```

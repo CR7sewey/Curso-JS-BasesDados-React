@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../images/logo.svg";
 import { linksPagina, socialLinks } from "../data";
+import PageLinks from "./PageLinks";
 
 function Navbar() {
   return (
@@ -12,18 +13,7 @@ function Navbar() {
             <i className="fas fa-bars"></i>
           </button>
         </div>
-        <ul className="nav-links" id="nav-links">
-          {linksPagina.map((link) => {
-            const { id, href, text } = link;
-            return (
-              <li key={id}>
-                <a href={href} className="nav-link">
-                  {text}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+        <PageLinks classPai="nav-links" classItem="nav-link" />
 
         <ul className="nav-icons">
           {socialLinks.map((link) => {
