@@ -306,3 +306,160 @@ import Title from "./Title";
 ```
 
 repetir para Services e Tours
+
+## Services
+
+- refatorar o codigo repetido (hint - como para a a pgina e os links das redes sociais)
+  - criar data, export/import, iterar
+
+data.js
+
+```js
+export const services = [
+  {
+    id: 1,
+    icon: "fas fa-wallet fa-fw",
+    titulo: "saving money",
+    texto:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit Asperiores, officia.",
+  },
+  {
+    id: 2,
+    icon: "fas fa-tree fa-fw",
+    titulo: "endless hiking",
+    texto:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit Asperiores, officia.",
+  },
+  {
+    id: 3,
+    icon: "fas fa-socks fa-fw",
+    titulo: "amazing comfort",
+    texto:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit Asperiores, officia.",
+  },
+];
+```
+
+Services.js
+
+```js
+import Title from "./Title";
+import { services } from "../data";
+
+export const Services = () => {
+  return (
+    <section className="section services" id="services">
+      <Title titulo={"our"} subTitulo={"services"} />
+
+      <div className="section-center services-center">
+        {services.map((servicos) => {
+          return (
+            <article className="service" key={servicos.id}>
+              <span className="service-icon">
+                <i className={servicos.icon}></i>
+              </span>
+              <div className="service-info">
+                <h4 className="service-title">{servicos.titulo}</h4>
+                <p className="service-text">{servicos.texto}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+```
+
+## Tours
+
+- refatorar codigo repetido repeating code
+
+```js
+export const tours = [
+  {
+    id: 1,
+    image: tour1,
+    data: "august 26th, 2020",
+    titulo: "Tibet Adventure",
+    info: ` Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vitae tempore voluptatum maxime reprehenderit eum quod exercitationem fugit, qui corporis.`,
+    localizacao: "china",
+    duracao: 6,
+    custo: 2100,
+  },
+  {
+    id: 2,
+    imagem: tour2,
+    data: "october 1th, 2020",
+    titulo: "best of java",
+    info: ` Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vitae tempore voluptatum maxime reprehenderit eum quod exercitationem fugit, qui corporis.`,
+    localizacao: "indonesia",
+    duracao: 11,
+    custo: 1400,
+  },
+  {
+    id: 3,
+    imagem: tour3,
+    data: "september 15th, 2020",
+    titulo: "explore hong kong",
+    info: ` Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vitae tempore voluptatum maxime reprehenderit eum quod exercitationem fugit, qui corporis.`,
+    localizacao: "hong kong",
+    duracao: 8,
+    custo: 5000,
+  },
+  {
+    id: 4,
+    imagem: tour4,
+    data: "december 5th, 2019",
+    titulo: "kenya highlights",
+    info: ` Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vitae tempore voluptatum maxime reprehenderit eum quod exercitationem fugit, qui corporis.`,
+    localizacao: "kenya",
+    duracao: 20,
+    custo: 3300,
+  },
+];
+```
+
+- Tours.jsx
+
+```js
+import Title from "./Title";
+import { tours } from "../data";
+
+export const Tours = () => {
+  return (
+    <section className="section" id="tours">
+      <Title titulo={"tours"} subTitulo={"!"} />
+
+      <div className="section-center featured-center">
+        {tours.map((tour) => {
+          return (
+            <article className="tour-card" key={tour.id}>
+              <div className="tour-img-container">
+                <img src={tour.imagem} className="tour-img" alt="" />
+                <p className="tour-date">{tour.data}</p>
+              </div>
+              <div className="tour-info">
+                <div className="tour-title">
+                  <h4>{tour.titulo}</h4>
+                </div>
+                <p>{tour.info}</p>
+                <div className="tour-footer">
+                  <p>
+                    <span>
+                      <i className="fas fa-map"></i>
+                    </span>{" "}
+                    {tour.localizacao}
+                  </p>
+                  <p>{tour.duracao} days</p>
+                  <p>from ${tour.custo}</p>
+                </div>
+              </div>
+            </article>
+          );
+        })}{" "}
+      </div>
+    </section>
+  );
+};
+```
