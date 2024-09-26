@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const UseStateBasics = () => {
   // console.log(useState());
@@ -16,8 +16,8 @@ const UseStateBasics = () => {
   };
   return (
     <div>
-      <h4>You clicked {count} times</h4>
-      <button className='btn' onClick={handleClick}>
+      <h4>Tu clicaste {count} vezes</h4>
+      <button className="btn" onClick={handleClick}>
         Click me
       </button>
     </div>
