@@ -418,3 +418,303 @@ const handleClick = () => {
 - as an example refactor code in
   /tutorial/01-useState/03-useState-array
 - should we use functional update approach for everything?
+
+# useEffect
+
+## Exemplo código
+
+```js
+import Starter from "./tutorial/02-useEffect/starter/01-code-example.jsx";
+```
+
+```js
+import { useState } from "react";
+
+const ComponentExample = () => {
+  const [value, setValue] = useState(0);
+  const sayHello = () => {
+    console.log("hello there");
+  };
+  sayHello();
+  return (
+    <div>
+      <h1>value : {value}</h1>
+      <button className="btn" onClick={() => setValue(value + 1)}>
+        click me
+      </button>
+    </div>
+  );
+};
+export default ComponentExample;
+```
+
+- Qual pode ser o problema deste código?
+- Se nós fizermos uma alteração ao valor dentro da função, vamos entrar num
+  loop infinito, pois o ciclo é: renderizar o componente -> função é executada e
+  altera o valor -> como valor foi alterado componente é re-renderizado -> função é executada e
+  altera o valor -> ...
+
+ex:
+
+```js
+const [value, setValue] = useState(0);
+
+const sayHello = () => {
+  console.log("hello there");
+  // be careful, you will have infinite loop
+  setValue(value + 1);
+};
+sayHello();
+```
+
+- Portanot, isto é um problema!
+
+- E se quisermos fazer fetch de data/uma api?
+- Podemos usar o useEffect hook!
+
+## useEffect Basics
+
+```js
+import Starter from "./tutorial/02-useEffect/starter/02-useEffect-basics.jsx";
+```
+
+useEffect é um hook no React que permite realizar efeitos "laterais" numa funcao
+num componente. Exemplo: subscriçoes, fetching data, alterar diretamente o DOM,
+event listeners, timers, etc
+
+- useEffect hook
+- aceita dois argumentos (segundo opcional)
+  - primeiro argumento - callback function
+  - segundo argumento - array de dependencias
+  - por default corre em cada renderizacao (priemiro e re-renderizacao)
+- callback function nao retorna uma Promise (portanto nao podemos fazer async)
+- se array de dependencias vazio [] corre só no render inicial
+- se array com elemento, só é ativado aquanod da mundaca do elemento
+
+```js
+import { useState, useEffect } from "react";
+
+const UseEffectBasics = () => {
+  const [value, setValue] = useState(0);
+  const sayHello = () => {
+    console.log("hello there");
+  };
+
+  sayHello();
+
+  // useEffect(() => { // ativado smepre que compoennte renderizado
+  //   console.log('hello from useEffect');
+  // });
+
+  useEffect(() => {
+    console.log("hello from useEffect");
+  }, []);
+  return (
+    <div>
+      <h1>value : {value}</h1>
+      <button className="btn" onClick={() => setValue(value + 1)}>
+        click me
+      </button>
+    </div>
+  );
+};
+export default UseEffectBasics;
+```
+
+## Multiple Effects
+
+```js
+import Starter from "./tutorial/02-useEffect/starter/03-multiple-effects.jsx";
+```
+
+```js
+import { useState, useEffect } from "react";
+
+const MultipleEffects = () => {
+  const [value, setValue] = useState(0);
+  const [secondValue, setSecondValue] = useState(0);
+
+  useEffect(() => {
+    console.log("hello from first useEffect");
+  }, [value]);
+
+  useEffect(() => {
+    console.log("hello from second useEffect");
+  }, [secondValue]);
+  return (
+    <div>
+      <h1>value : {value}</h1>
+      <button className="btn" onClick={() => setValue(value + 1)}>
+        value
+      </button>
+      <h1>second value : {secondValue}</h1>
+      <button className="btn" onClick={() => setSecondValue(secondValue + 1)}>
+        second value
+      </button>
+    </div>
+  );
+};
+export default MultipleEffects;
+```
+
+## Fetch Data
+
+```js
+import Starter from "./tutorial/02-useEffect/starter/04-fetch-data.jsx";
+```
+
+[Javascript Nuggets - Fetch API](https://www.youtube.com/watch?v=C_VIKzfpRrg&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=18&t=343s)
+
+- Ver módulo JavaScript Assíncrono (https://medium.com/@johnnyJK/axios-vs-fetch-api-selecting-the-right-tool-for-http-requests-ecb14e39e285)
+
+- mais tarde no curso vamos usar axios (axios ou fetch sao duas API usadas para consumir dados)
+
+Desafio :
+
+- import useState e useEffect
+- criar valor de estado
+  - users - default value [] (const [users, setUsers] = useState([]))
+- implementar useEffect
+- FAZER COM QUE SO CORRA NO RENDER INICIAL!!!
+- na callback function, criar uma funcao que perform a funcionaldiade de fetch
+  - usar o url no inicio do file
+  - podemos usar .then ou async (minha preferencia)
+  - meter users igual ao resultado
+  - iterar sob a lista e mostrar a imagem, nome e link
+
+```js
+import { useState, useEffect } from "react";
+
+const url = "https://api.github.com/users";
+
+const FetchData = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    // you can also setup function outside
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const users = await response.json();
+        setUsers(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+  return (
+    <section>
+      <h3>github users</h3>
+      <ul className="users">
+        {users.map((user) => {
+          const { id, login, avatar_url, html_url } = user;
+          return (
+            <li key={id}>
+              <img src={avatar_url} alt={login} />
+              <div>
+                <h5>{login}</h5>
+                <a href={html_url}>profile</a>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+};
+export default FetchData;
+```
+
+## Funcao de Limpeza (Cleanup) - talvez nao seja relevante para isto
+
+```js
+import Starter from "./tutorial/02-useEffect/starter/05-cleanup-function.jsx";
+```
+
+- Desafio:
+
+- criar valor de estado
+- no jsx retornar button que muda(toggle) o valor de estado (true -> false -> true)
+- baseado na condicao de retorno de segundo elemento
+- dentro do segundo compoente criar useEffect e correr apenas no render inicial
+
+```js
+import { useEffect, useState } from "react";
+
+const CleanupFunction = () => {
+  const [toggle, setToggle] = useState(false);
+  return (
+    <div>
+      <button className="btn" onClick={() => setToggle(!toggle)}>
+        toggle component
+      </button>
+      {toggle && <RandomComponent />}
+    </div>
+  );
+};
+const RandomComponent = () => {
+  useEffect(() => {
+    console.log("hmm, this is interesting");
+  }, []);
+  return <h1>hello there</h1>;
+};
+export default CleanupFunction;
+```
+
+Vanilla JS
+
+```js
+const intID = setInterval(() => {
+  console.log("hello from interval");
+}, 1000);
+clearInterval(intID);
+```
+
+```js
+const someFunc = () => {
+  // some logic here
+};
+window.addEventListener("scroll", someFunc);
+window.removeEventListener("scroll", someFunc);
+```
+
+```js
+import { useEffect, useState } from "react";
+
+const CleanupFunction = () => {
+  const [toggle, setToggle] = useState(false);
+  return (
+    <div>
+      <button className="btn" onClick={() => setToggle(!toggle)}>
+        toggle component
+      </button>
+      {toggle && <RandomComponent />}
+    </div>
+  );
+};
+const RandomComponent = () => {
+  useEffect(() => {
+    // console.log('hmm, this is interesting');
+    const intID = setInterval(() => {
+      console.log("hello from interval");
+    }, 1000);
+    // does not stop, keeps going
+    // every time we render component new interval gets created
+    return () => clearInterval(intID);
+  }, []);
+  return <h1>hello there</h1>;
+};
+export default CleanupFunction;
+```
+
+```js
+useEffect(() => {
+  // console.log('hmm, this is interesting');
+  const someFunc = () => {
+    // some logic here
+  };
+  window.addEventListener("scroll", someFunc);
+  return () => window.removeEventListener("scroll", someFunc);
+}, []);
+```
