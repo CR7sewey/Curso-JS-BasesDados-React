@@ -718,3 +718,644 @@ useEffect(() => {
   return () => window.removeEventListener("scroll", someFunc);
 }, []);
 ```
+
+#### Multiple Returns - Basics
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/01-multiple-returns-basics.jsx";
+```
+
+Vanilla JS
+
+```js
+const sayHello = (name) => {
+  if (name) {
+    return `Hello, ${name}`;
+    // sai da funcao, faz skip do resto do codigo
+  }
+  // se o nome for fornecido, nao vai ter a esta linha
+  return "Hello, there";
+};
+
+const firstResp = sayHello("john");
+console.log(firstResp); // Hello, john
+const secondResp = sayHello();
+console.log(secondResp); // Hello, there
+```
+
+- Se nao ha um explicito return, a funcao retorna 'undefined'
+
+```js
+import { useEffect, useState } from "react";
+
+const MultipleReturnsBasics = () => {
+  // enquanto fetching data
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      // done fetching data
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  return <h2>My App</h2>;
+};
+export default MultipleReturnsBasics;
+```
+
+#### Multiple Returns - Fetch Data
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/02-multiple-returns-fetch-data.jsx";
+```
+
+Desafio :
+
+- criar valores de estado e fazer fetch da data
+- criar valor de estado
+  - user - valor default: null
+- fetch data do url (console.log do resultado)
+- ver objeto na consola
+
+```js
+import { useEffect, useState } from "react";
+const url = "https://api.github.com/users/QuincyLarson";
+
+const MultipleReturnsFetchData = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const resp = await fetch(url);
+        const user = await resp.json();
+        console.log(user);
+      } catch (error) {
+        // fetch only cares about network errors
+        // will work with axios
+        console.log(error);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  return <h2>Fetch Example</h2>;
+};
+export default MultipleReturnsFetchData;
+```
+
+Data Fetching :
+
+- normalmente configuramos tres opçoes
+
+  - loading - esperar de data para chegar (mostrar loading state)
+  - error - quando ha um erro (mostrar mensagem de erro)
+  - success - data recebida (mostrar data)
+
+```js
+import { useEffect, useState } from "react";
+const url = "https://api.github.com/users/QuincyLarson";
+
+const MultipleReturnsFetchData = () => {
+  // convention to setup booleans with isSomething
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const resp = await fetch(url);
+        const user = await resp.json();
+        // console.log(user);
+        setUser(user);
+      } catch (error) {
+        setIsError(true);
+        console.log(error);
+      }
+      // hide loading
+      setIsLoading(false);
+    };
+    fetchUser();
+  }, []);
+  // ordem importa
+  // nao colocar JSX antes de loading ou erro
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>There was an error...</h2>;
+  }
+  return (
+    <div>
+      <img
+        style={{ width: "150px", borderRadius: "25px" }}
+        src={user.avatar_url}
+        alt={user.name}
+      />
+      <h2>{user.name}</h2>
+      <h4>works at {user.company}</h4>
+      <p>{user.bio}</p>
+    </div>
+  );
+};
+export default MultipleReturnsFetchData;
+```
+
+#### Fetch Errors
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/02-multiple-returns-fetch-data.jsx";
+```
+
+No caso do fetch (ao contrario da Axios), por default, a fetch() API nao considera codigos de estado HTTP no range de 400 a 599 como erros. Pelo contrário, considera estes status codes como um request de sucesso. Então, convem validar o erro com !resp.ok
+
+```js
+try {
+const resp = await fetch(url);
+// console.log(resp);
+if (!resp.ok) {
+  setIsError(true);
+  setIsLoading(false);
+  return;
+}
+
+const user = await resp.json();
+setUser(user);
+
+}
+
+```
+
+#### Ordem Importa - Setup
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/02-multiple-returns-fetch-data.jsx";
+```
+
+Desafio :
+
+- desestruturar propriedades e remover user do JSX
+
+```js
+return (
+  <div>
+    <img
+      style={{ width: "100px", borderRadius: "25px" }}
+      src={avatar_url}
+      alt={name}
+    />
+    <h2>{name}</h2>
+    <h4>works at {company}</h4>
+    <p>{bio}</p>
+  </div>
+);
+```
+
+#### Ordem Importa - Solução
+
+- antes do retorno
+
+```js
+const [user, setUser] = useState(null);
+console.log(user); // ainda nulo
+// nao conseguimos tirar propriedade de nulo
+const { avatar_url, name, company, bio } = user;
+```
+
+- depois do retorno
+
+```js
+console.log(user); // user object;
+const { avatar_url, name, company, bio } = user;
+```
+
+```js
+return (
+  <div>
+    <img
+      style={{ width: "100px", borderRadius: "25px" }}
+      src={avatar_url}
+      alt={name}
+    />
+    <h2>{name}</h2>
+    <h4>works at {company}</h4>
+    <p>{bio}</p>
+  </div>
+);
+```
+
+Vanilla JS
+
+```js
+const someObject = {
+  name: "jo koy",
+};
+// this is cool
+someObject.name; // returns 'jo koy'
+someObject.propertyThatDoesNotExist; // returns undefined
+
+// erro!!!!!!!!!!!
+const randomValue = null;
+randomValue.name;
+
+// Ok
+const randomList = [];
+console.log(randomList[0]); // retorna undefined
+
+// erro!!!!!!!!!!!
+console.log(randomList[0].name);
+```
+
+#### Nao executar HOOKS condicionalmente!!!!!
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/03-hooks-rule.jsx";
+```
+
+```js
+import { useState, useEffect } from "react";
+
+const Example = () => {
+  const [condition, setCondition] = useState(true);
+  if (condition) {
+    // nao funciona
+    const [state, setState] = useState(false);
+  }
+
+  if (condition) {
+    return <h2>Hello There</h2>;
+  }
+  // vai falhar!
+  useEffect(() => {
+    console.log("hello there");
+  }, []);
+  return <h2>example</h2>;
+};
+
+export default Example;
+```
+
+#### Valores Truthy e Falsy Values - Opcional
+
+Vanilla JS
+
+No JavaScript, um valor é considerado "truthy" se é avaliado como true quando
+usado num contexto de boolean. Um valor é considerado "falsy" se é avaliado como
+false quando usado num contexto de boolean.
+
+Aqui está uma lista de valores considerados com falsos no JS:
+
+false
+0 (zero)
+"" (empty string)
+null
+undefined
+NaN (Not a Number)
+Todos os outros valores, incluindo objetos e arrays, são considerados truthy.
+
+Por exemplo:
+
+```js
+const x = "Hello";
+const y = "";
+const z = 0;
+
+if (x) {
+  console.log("x is truthy");
+}
+
+if (y) {
+  console.log("y is truthy");
+} else {
+  console.log("y is falsy");
+}
+
+if (z) {
+  console.log("z is truthy");
+} else {
+  console.log("z is falsy");
+}
+
+// Output:
+// "x is truthy"
+// "y is falsy"
+// "z is falsy"
+```
+
+Neste exemplo, a varaivel x é uma string nao vazia, que é considerada truthy, então
+apenas o primeiros é executado. A variavel y é uma string vazia, que é considerada
+falsy, então o bloco else do segundo é executado. A varaivel z é o numero 0,
+que é considerado falsy, entao o bloco else do terceiro é executado.
+
+#### Curto Circuito Avaliação (opcional)
+
+Vanilla JS
+
+No JavaScript, a avaliação de curto-circuito é uma tecnica que permite
+usar operadores logicos (como && e ||) para performar avaliações condicionais
+numa forma concisa.
+
+O operador && (AND/E) retorna o primeiro operando se é "falsy", ou o segundo operando
+se o primeiro é "truthy".
+
+Exemplo:
+
+```js
+const x = 0;
+const y = 1;
+
+console.log(x && y); // Output: 0 (o primeiro operando é falsy, então é retornado)
+console.log(y && x); // Output: 0 (o segundo operando é falsy, então é retornado)
+```
+
+O operador || (OR/OU) retorna o primeiro operando se é "truthy", ou o segundo operando
+se o primeiro é "falsy".
+
+Exemplo:
+
+```js
+const x = 0;
+const y = 1;
+
+console.log(x || y); // Output: 1 (o primeiro operando é falsy, então o segundo é retornado)
+console.log(y || x); // Output: 1 (o primeiro operando é truthy, então é retornado)
+```
+
+A avaliação de curto-circuito pode ser útil em casos onde tu queres performar uma
+determinada ação apena se uma determina condição é encontrada, ou se vocês quiserem
+retornar um valor defaul se uma certa condição não for encontrada!
+
+Exemplo:
+
+```js
+function displayName(name) {
+  return name || "Anonymous";
+}
+
+console.log(displayName("Pizza")); // Output: "Pizza"
+console.log(displayName()); // Output: "Anonymous"
+```
+
+Neste exemplo, o displayName() retorna o nome da propriedade do objeto do user se
+ele existir, ou "Anonymous" se o nome da propriedade não estiver presente. Isto pode
+ser feito a usar o operador || e a avalição de curto-circuito!
+
+#### Avaliação Curto Circuito React - Basico
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/04-short-circuit-overview.jsx";
+```
+
+Desafio :
+
+- criar dois valores de estado
+- um "falsy" e um "truthy"
+- montar ambas as condições para cada operador no JSX - usar {}
+  - || OR
+  - && AND
+
+```js
+import { useState } from "react";
+
+const ShortCircuitOverview = () => {
+  // falsy
+  const [text, setText] = useState("");
+  // truthy
+  const [name, setName] = useState("susan");
+
+  const codeExample = text || "hello world";
+
+  // can't use if statements
+  return (
+    <div>
+      {/* {if(someCondition){"won't work"}} */}
+
+      <h4>Falsy OR : {text || "hello world"}</h4>
+      <h4>Falsy AND {text && "hello world"}</h4>
+      <h4>Truthy OR {name || "hello world"}</h4>
+      <h4>Truthy AND {name && "hello world"}</h4>
+      {codeExample}
+    </div>
+  );
+};
+export default ShortCircuitOverview;
+```
+
+#### Avaliação Curto Circuito React - Abordagens comuns
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/05-short-circuit-examples.jsx";
+```
+
+Vanilla JS
+O operador ! é um operador logico no JavaScript que nega um valor boolean. Equivale ao not noutras
+linguagens.
+
+Exemplo:
+
+```js
+let isTrue = true;
+let isFalse = false;
+
+console.log(!isTrue); // outputs: false
+console.log(!isFalse); // outputs: true
+```
+
+Podemos usar o operador ! para testar se um valor é truthy ou falsy:
+
+```js
+let val = 0;
+if (!val) {
+  console.log("val is falsy");
+}
+```
+
+Podemos usar o operador ! para converter um valor para boolean e nega-lo:
+
+```js
+let val = "hello";
+let bool = !val; // bool is now false
+
+val = "";
+bool = !val; // bool is now true
+```
+
+```js
+import { useState } from "react";
+
+const ShortCircuitOverview = () => {
+  // falsy
+  const [text, setText] = useState("");
+  // truthy
+  const [name, setName] = useState("susan");
+  const [user, setUser] = useState({ name: "john" });
+  const [isEditing, setIsEditing] = useState(false);
+
+  // can't use if statements
+  return (
+    <div>
+      <h2>{text || "default value"}</h2>
+      {text && (
+        <div>
+          <h2> whatever return</h2>
+          <h2>{name}</h2>
+        </div>
+      )}
+      {/* more info below */}
+      {!text && (
+        <div>
+          <h2> whatever return</h2>
+          <h2>{name}</h2>
+        </div>
+      )}
+      {user && <SomeComponent name={user.name} />}
+      <h2 style={{ margin: "1rem 0" }}>Ternary Operator</h2>
+      <button className="btn">{isEditing ? "edit" : "add"}</button>
+      {user ? (
+        <div>
+          <h4>hello there user {user.name}</h4>
+        </div>
+      ) : (
+        <div>
+          <h2>please login</h2>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SomeComponent = ({ name }) => {
+  return (
+    <div>
+      <h4>hello there, {name}</h4>
+      <button className="btn">log out</button>
+    </div>
+  );
+};
+export default ShortCircuitEvaluation;
+```
+
+#### Operador Ternário
+
+Vanilla JS
+
+No JavaScript, o operador ternário é uma forma concisa para exprimir uma simples
+condicao.
+
+Sintax:
+
+```js
+condition ? expression1 : expression2;
+```
+
+Se a condicao é truthy, o operador vai retornar a expression1. Se a condicao é falsy, vai retornar a expression2.
+
+#### Toggle Challenge
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/06-toggle-challenge.jsx";
+```
+
+- criar um valor de estado (boolean)
+- retornar um button e um componente/elemento
+- quando um user clica num button
+  - toggle o valor de estado
+  - condicionalment renderizar o componente/elemento
+
+Initial Setup
+
+```js
+import { useState } from "react";
+
+const ToggleChallenge = () => {
+  const [showAlert, setShowAlert] = useState(false);
+
+  const toggleAlert = () => {
+    if (showAlert) {
+      setShowAlert(false);
+      return;
+    }
+    setShowAlert(true);
+  };
+
+  return (
+    <div>
+      <button className="btn" onClick={toggleAlert}>
+        toggle alert
+      </button>
+      {showAlert && <Alert />}
+    </div>
+  );
+};
+
+const Alert = () => {
+  return <div className="alert alert-danger">hello world</div>;
+};
+export default ToggleChallenge;
+```
+
+Improvements
+
+```js
+<button className='btn' onClick={() => setShowAlert(!showAlert)}>
+```
+
+#### User Challenge
+
+```js
+import Starter from "./tutorial/03-conditional-rendering/starter/07-user-challenge.jsx";
+```
+
+- criar valor de estado state value
+  - user - valor default como nulo
+- criar duas funcoes
+  - login - coloca o user igual a um objeto com a propriedade name
+  - logout - coloca o user igual a nulo
+- no jsx usar ? para mostrar od dois diferentes setups
+
+- h4 com "hello there, user name" e o button logout
+- h4 com "please login " e o button login
+
+```js
+import { useState } from "react";
+
+const UserChallenge = () => {
+  const [user, setUser] = useState(null);
+
+  const login = () => {
+    // normally connect to db or api
+    setUser({ name: "vegan food truck" });
+  };
+  const logout = () => {
+    setUser(null);
+  };
+
+  return (
+    <div>
+      {user ? (
+        <div>
+          <h4>hello there, {user.name}</h4>
+          <button className="btn" onClick={logout}>
+            logout
+          </button>
+        </div>
+      ) : (
+        <div>
+          <h4>Please Login</h4>
+          <button className="btn" onClick={login}>
+            login
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserChallenge;
+```

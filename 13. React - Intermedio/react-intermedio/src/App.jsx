@@ -1,4 +1,4 @@
-import Componente from "./tutorial/02-useEffect/final/05-cleanup-function";
+import Componente from "./tutorial/03-conditional-rendering/final/05-short-circuit-examples";
 
 function App() {
   return (
