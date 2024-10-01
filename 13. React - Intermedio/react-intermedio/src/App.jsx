@@ -1,4 +1,4 @@
-import Componente from "./tutorial/03-conditional-rendering/final/05-short-circuit-examples";
+import Componente from "./tutorial/06-forms/final/01-controlled-inputs";
 
 function App() {
   return (
