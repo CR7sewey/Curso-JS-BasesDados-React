@@ -1765,11 +1765,12 @@ export default UncontrolledInputs;
 
 - e.currentTarget
 
-In React, e.currentTarget returns the DOM element that triggered the event.
+No React, e.currentTarget retorna o elemento DOM que deu trigger ao evento.
 
 - Object From Entries
 
-The Object.fromEntries() static method transforms a list of key-value pairs into an object.
+O Object.fromEntries() é um metodo estatico que transforma uma lista
+de chaves-valores num objeto!
 
 ```js
 const entries = new Map([
@@ -1785,4 +1786,146 @@ console.log(obj);
 
 - reset()
 
-The reset() method is a built-in method in HTML that can be used to reset all form controls to their initial values. When this method is called on a form element, it will clear any user-entered data and reset the values of all form elements to their default values.
+O metodo reset() é um metodo built-in no HTML que pode ser usado para fazer
+reset a todos os componente form ao valor inicial. Qunaod este método é
+chamado num elemento form, vai ser claro que qualquer data introduzida por o utilizador
+e faz o resete de todos os valores de todos os elementos form ao valor default.
+
+#### Context API
+
+```js
+import Starter from "./tutorial/09-context-api/starter";
+```
+
+Desafio
+
+- criar tres componentes e fazer nest(aninhar) da seguinte forma:
+
+- Navbar.jsx
+
+  - NavLinks.jsx (nested/aninhados no Navbar)
+    - UserContainer.jsx (nested/aninhados no NavLinks)
+
+- import Navbar.jsx na App.jsx (remover container (class) - CSS)
+- na Navbar.jsx
+  - criar valor de estado "user"
+    - valor default {name:'something'}
+  - funcao logout
+    - meter user de volta a null
+- passar ambos (user e logout) para o UserContainer.jsx como props
+- display de user e button
+- on button click set user back to null
+
+- desafio extra
+- se user null, no UserContainer display <p>please login</p>
+
+Navbar.jsx
+
+```js
+import { useState } from "react";
+import NavLinks from "./NavLinks";
+
+const Navbar = () => {
+  const [user, setUser] = useState({ name: "bob" });
+  const logout = () => {
+    setUser(null);
+  };
+  return (
+    <nav className="navbar">
+      <h5>CONTEXT API</h5>
+      <NavLinks user={user} logout={logout} />
+    </nav>
+  );
+};
+export default Navbar;
+```
+
+NavLinks.jsx
+
+```js
+import UserContainer from "./UserContainer";
+
+const NavLinks = ({ user, logout }) => {
+  return (
+    <div className="nav-container">
+      <ul className="nav-links">
+        <li>
+          <a href="#">home</a>
+        </li>
+        <li>
+          <a href="#">about</a>
+        </li>
+      </ul>
+      <UserContainer user={user} logout={logout} />
+    </div>
+  );
+};
+export default NavLinks;
+```
+
+UserContainer.jsx
+
+```js
+const UserContainer = ({ user, logout }) => {
+  return (
+    <div className="user-container">
+      {user ? (
+        <>
+          <p>Hello There, {user.name.toUpperCase()}</p>
+          <button type="button" className="btn" onClick={logout}>
+            logout
+          </button>
+        </>
+      ) : (
+        <p>Please Login</p>
+      )}
+    </div>
+  );
+};
+export default UserContainer;
+```
+
+Problemas disto:
+
+Se eu tiver 5 componentes aninhadas, ex. A -> B -> C -> D -> E
+Se eu só precisar de um valor de estado em A e em E, para quê estar a passar
+por B, C e D??
+
+- Propdrilling
+  - App mais lenta (quando mais de 3 aninhadas)
+  - Se mudancas num valor de estado no nivel mais acima implica renderizacao de
+    todas as componentes na hierarquia
+  - ...
+
+Entao surgiram formas/técnicas de gestão de valores de estado (state values)
+
+- Context API (mais simples)
+- Redux (mais poderosa)
+- outras
+
+Vantagem: No fim de fazer o setup inicial, montar a estrutura não é preciso
+mais alterar muito
+Desvantagem: complexo de montar
+
+#### Montar Global Context
+
+- cirar um novo VITE project (no final do 09-context-api)
+
+```sh
+npm create vite@latest global-context -- --template react
+```
+
+- instalar e comecar o projeto
+
+```sh
+npm install && npm run dev
+```
+
+- no src create context.jsx
+- montar um contexto global - GlobalContext
+- montar um componente (AppContext) com um valore de estado
+- retornar GlobalContext.Provider da AppContext
+- embrulhar toda a aplicação (main.jsx)
+- criar um custom hook (global = useContext(...))
+- aceder no App.jsx
+- log o resultado
