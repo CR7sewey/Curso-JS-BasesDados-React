@@ -1929,3 +1929,476 @@ npm install && npm run dev
 - criar um custom hook (global = useContext(...))
 - aceder no App.jsx
 - log o resultado
+
+#### useReducer
+
+```js
+import Starter from "./tutorial/10-useReducer/starter/01-useReducer.jsx";
+```
+
+Desafio
+
+- Adicionar funcionalidade de reset
+- criar uma funcao que mete novamente as pessoas com o array que veio da data
+- criar outro button, semelhante ao de clear para fazer reset
+- usar conditional rendering para toggle entre os buttons,
+  dependendo do tamanho do array de pessoas
+
+```js
+const resetList = () => {
+  setPeople(data);
+};
+
+// JSX
+{
+  people.length < 1 ? (
+    <button className="btn" style={{ marginTop: "2rem" }} onClick={resetList}>
+      reset
+    </button>
+  ) : (
+    <button className="btn" style={{ marginTop: "2rem" }} onClick={clearList}>
+      clear
+    </button>
+  );
+}
+```
+
+```js
+import React from "react";
+import { data } from "../../../data";
+const ReducerBasics = () => {
+  const [people, setPeople] = React.useState(data);
+
+  const removeItem = (id) => {
+    let newPeople = people.filter((person) => person.id !== id);
+    setPeople(newPeople);
+  };
+  const resetList = () => {
+    setPeople(data);
+  };
+  return (
+    <div>
+      {people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Remover useState
+
+```js
+import { useState, useReducer } from "react";
+import { data } from "../../../data";
+
+// estado default/inicial
+const defaultState = {
+  people: data,
+};
+// funcao de reducer
+// qualquer que seja o estado retornado da funcao é o novo estado
+
+// state - estado atual
+// action - passado no dispatch
+
+const reducer = (state, action) => {
+  return state;
+};
+
+// dispatch({type:'SOME_ACTION'}) an action
+// handle it in reducer, return new state
+
+const ReducerBasics = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  const removeItem = (id) => {
+    // let newPeople = people.filter((person) => person.id !== id);
+    // setPeople(newPeople);
+  };
+
+  const clearList = () => {
+    // setPeople([]);
+  };
+  const resetList = () => {
+    // setPeople(data);
+  };
+
+  return (
+    <div>
+      {/* switch to state */}
+      {state.people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {/* switch to state */}
+      {state.people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Primeiro Dispatch
+
+```js
+import { useState, useReducer } from "react";
+import { data } from "../../../data";
+
+const defaultState = {
+  people: data,
+  isLoading: false,
+};
+
+const reducer = (state, action) => {
+  if (action.type === "CLEAR_LIST") {
+    return { ...state, people: [] };
+  }
+};
+
+const ReducerBasics = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  const removeItem = (id) => {
+    // let newPeople = people.filter((person) => person.id !== id);
+    // setPeople(newPeople);
+  };
+
+  const clearList = () => {
+    dispatch({ type: "CLEAR_LIST" });
+    // setPeople([]);
+  };
+  const resetList = () => {
+    // setPeople(data);
+  };
+  console.log(state);
+  return (
+    <div>
+      {state.people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {state.people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Actions e Estado Default
+
+```js
+import { useReducer } from "react";
+import { data } from "../../../data";
+
+const CLEAR_LIST = "CLEAR_LIST";
+const RESET_LIST = "RESET_LIST";
+const REMOVE_ITEM = "REMOVE_ITEM";
+
+const defaultState = {
+  people: data,
+};
+
+const reducer = (state, action) => {
+  console.log(action);
+  if (action.type === CLEAR_LIST) {
+    return { ...state, people: [] };
+  }
+
+  throw new Error(`No Matching "${action.type}" - action type`);
+};
+
+const ReducerBasics = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  const removeItem = (id) => {};
+
+  const clearList = () => {
+    dispatch({ type: CLEAR_LIST });
+  };
+
+  const resetList = () => {};
+  return (
+    <div>
+      {/* switch to state */}
+      {state.people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {/* switch to state */}
+
+      {state.people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Desafio - Reset List
+
+- criar um dispatch e lidar com action no reducer
+
+```js
+import { useReducer } from "react";
+import { data } from "../../../data";
+
+const CLEAR_LIST = "CLEAR_LIST";
+const RESET_LIST = "RESET_LIST";
+const REMOVE_ITEM = "REMOVE_ITEM";
+
+const defaultState = {
+  people: data,
+};
+
+const reducer = (state, action) => {
+  console.log(action);
+  if (action.type === CLEAR_LIST) {
+    return { ...state, people: [] };
+  }
+  if (action.type === RESET_LIST) {
+    return { ...state, people: data };
+  }
+  throw new Error(`No Matching "${action.type}" - action type`);
+};
+
+const ReducerBasics = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  const removeItem = (id) => {};
+
+  const clearList = () => {
+    dispatch({ type: CLEAR_LIST });
+  };
+  const resetList = () => {
+    dispatch({ type: RESET_LIST });
+  };
+
+  return (
+    <div>
+      {/* switch to state */}
+      {state.people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {/* switch to state */}
+
+      {state.people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Desafio - Remover Pessoa
+
+- remover uma unica pessoa
+
+```js
+import { useReducer } from "react";
+import { data } from "../../../data";
+
+const CLEAR_LIST = "CLEAR_LIST";
+const RESET_LIST = "RESET_LIST";
+const REMOVE_ITEM = "REMOVE_ITEM";
+
+const defaultState = {
+  people: data,
+};
+
+const reducer = (state, action) => {
+  console.log(action);
+  if (action.type === CLEAR_LIST) {
+    return { ...state, people: [] };
+  }
+  if (action.type === RESET_LIST) {
+    return { ...state, people: data };
+  }
+  if (action.type === REMOVE_ITEM) {
+    let newPeople = state.people.filter(
+      (person) => person.id !== action.payload.id
+    );
+
+    return { ...state, people: newPeople };
+  }
+
+  return state;
+};
+
+const ReducerBasics = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_ITEM, payload: { id } });
+  };
+
+  const clearList = () => {
+    dispatch({ type: CLEAR_LIST });
+  };
+  const resetList = () => {
+    dispatch({ type: RESET_LIST });
+  };
+
+  return (
+    <div>
+      {/* switch to state */}
+      {state.people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      {/* switch to state */}
+
+      {state.people.length < 1 ? (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={resetList}
+        >
+          reset
+        </button>
+      ) : (
+        <button
+          className="btn"
+          style={{ marginTop: "2rem" }}
+          onClick={clearList}
+        >
+          clear
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default ReducerBasics;
+```
+
+#### Import / Export
+
+- criar novo file - actions.js
+
+  - copy/paste todas as actions
+  - export/import actions
+
+- criar novo file - reducer.js
+
+  - copy/paste reducer
+  - import actions
+  - import data
+  - export/import reducer

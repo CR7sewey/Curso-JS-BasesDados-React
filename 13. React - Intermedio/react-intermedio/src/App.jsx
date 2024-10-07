@@ -1,4 +1,4 @@
-import Componente from "./tutorial/06-forms/final/01-controlled-inputs";
+import Componente from "./tutorial/10-useReducer/starter/01-useReducer";
 
 function App() {
   return (
