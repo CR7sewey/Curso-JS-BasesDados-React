@@ -97,3 +97,29 @@ tailwind.config.cjs
 ```sh
 npm i axios dayjs @reduxjs/toolkit @tanstack/react-query @tanstack/react-query-devtools react-icons react-redux react-router-dom react-toastify
 ```
+
+## 2 - Criar Todas as Páginas
+
+- Criar diretoria: pages
+- criar todas as pages e exportar
+- About, Cart, Checkout, Error,
+  HomeLayout, Landing, Login,
+  Products, Register, SingleProduct
+- import no app.jsx
+
+App.jsx
+
+```js
+import {
+  HomeLayout,
+  Landing,
+  Error,
+  Products,
+  SingleProduct,
+  Cart,
+  About,
+  Register,
+  Login,
+  Checkout,
+} from "./pages";
+```
