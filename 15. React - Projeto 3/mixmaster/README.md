@@ -64,3 +64,27 @@ const App = () => {
 
 export default App;
 ```
+
+#### Setup Pages
+
+- pages são components
+- create src/pages
+- About, Cocktail, Error, HomeLayout, Landing, Newsletter
+
+App.jsx
+
+```js
+import About from "./pages/About";
+import Landing from "./pages/Landing";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Landing />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+]);
+```
