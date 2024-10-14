@@ -429,3 +429,75 @@ const router = createBrowserRouter([
   },
 ]);
 ```
+
+#### Fetch
+
+- useEffect
+
+Landing.jsx
+
+```js
+const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=a";
+
+const fetchSomething = async () => {
+  try {
+    const response = await axios.get(url);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(() => {
+  fetchSomething();
+}, []);
+```
+
+#### Loader
+
+Cada rota pode definir uma funcao 'loader' para fornecer data ao elemento raiz antes de renderizar
+
+- deve retornar algo sempre, nem que seja null!!!!
+
+Landing.jsx
+
+```js
+import { useLoaderData } from "react-router-dom";
+
+export const loader = async () => {
+  try {
+    const response = await axios(url);
+    return { drinks: response.data.drinks };
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+};
+
+const Landing = () => {
+  const data = useLoaderData();
+  console.log(data.drinks);
+  return <h1>Landing</h1>;
+};
+export default Landing;
+```
+
+```js
+import { loader as landingLoader } from './pages/Landing.jsx';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomeLayout />,
+    errorElement:<Error/>
+    children: [
+      {
+        index: true,
+        loader: landingLoader,
+        element: <Landing />,
+      },
+      // rest
+    ],
+  },
+]);
+```
