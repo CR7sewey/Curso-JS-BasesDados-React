@@ -329,3 +329,103 @@ index.css
   padding: 5rem 2rem;
 }
 ```
+
+#### Error Page
+
+- wrong url
+
+Error.jsx
+
+```js
+import { Link, useRouteError } from "react-router-dom";
+import img from "../assets/not-found.svg";
+
+const Error = () => {
+  const error = useRouteError();
+  console.log(error);
+  if (error.status === 404) {
+    return (
+      <div className="error">
+        <div>
+          <img src={img} alt="not found" />
+          <h3>Oh! </h3>
+          <p>Não conseguimos encontrar a página que procuras</p>
+          <Link to="/">back home</Link>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="error">
+      <div>
+        <h3>Algo Errado :(</h3>
+      </div>
+    </div>
+  );
+};
+
+export default Error;
+```
+
+#### Error Page - CSS (optional)
+
+```css
+.error div {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.error img {
+  width: 90vw;
+  max-width: 600px;
+  display: block;
+  margin-bottom: 2rem;
+  margin-top: -3rem;
+}
+.error h3 {
+  margin-bottom: 0.5rem;
+}
+
+.error p {
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--grey-500);
+}
+.error a {
+  color: var(--primary-500);
+  text-transform: capitalize;
+}
+```
+
+##### App
+
+```js
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "cocktail",
+        element: <Cocktail />,
+      },
+      {
+        path: "newsletter",
+        element: <Newsletter />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+    ],
+  },
+]);
+```

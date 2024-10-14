@@ -4,11 +4,13 @@ import Landing from "./pages/Landing";
 import HomeLayout from "./pages/HomeLayout";
 import Cocktail from "./pages/Cocktail";
 import Newsletter from "./pages/Newsletter";
+import Error from "./pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
