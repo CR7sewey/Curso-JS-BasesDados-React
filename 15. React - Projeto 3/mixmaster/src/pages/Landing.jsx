@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
 
-const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=a";
+const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
 export const loader = async () => {
   try {
-    const response = await axios(url);
-    return { drinks: response.data.drinks };
+    const searchTerm = "a";
+    const response = await axios(url.concat(searchTerm));
+    return { drinks: response.data.drinks, searchTerm };
   } catch (e) {
     console.log(e);
     return e;
@@ -15,8 +16,8 @@ export const loader = async () => {
 };
 
 const Landing = () => {
-  const data = useLoaderData();
-  console.log(data.drinks);
+  const { drinks, searchTerm } = useLoaderData();
+  console.log(drinks);
   return (
     <>
       <h2>home page</h2>
