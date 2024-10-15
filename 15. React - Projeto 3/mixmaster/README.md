@@ -577,3 +577,128 @@ const SinglePageError = () => {
 };
 export default SinglePageError;
 ```
+
+#### Mais Components
+
+- no src/components criar SearchForm, CocktailList, CocktailItem
+- renderizar SearchForm e CocktailList no Landing
+- passar drinks, iterar sobre e renderizar no CocktailItem
+
+Landing.jsx
+
+```js
+const Landing = () => {
+  const { drinks, searchTerm } = useLoaderData();
+  console.log(drinks);
+  return (
+    <>
+      <SearchForm />
+      <CocktailList drinks={drinks} />
+    </>
+  );
+};
+```
+
+CocktailList.jsx
+
+```jsx
+const CocktailList = function ({ drinks }) {
+  if (!drinks) {
+    return (
+      <h4 style={{ textAlign: "center" }}>No matching cocktails found...</h4>
+    );
+  }
+  return (
+    <div className="cocktail-list">
+      <div>
+        {drinks.map((drink) => {
+          const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } =
+            drink;
+          const drinkFormated = {
+            id: idDrink,
+            name: strDrink,
+            image: strDrinkThumb,
+            info: strAlcoholic,
+            glass: strGlass,
+          };
+          return <CocktailItem key={drink.idDrink} {...drinkFormated} />;
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default CocktailList;
+```
+
+- CocktailList css
+
+```css
+.cocktail-list div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+```
+
+```jsx
+import { Link } from "react-router-dom";
+
+export default function CocktailItem({ id, name, image, info, glass }) {
+  return (
+    <div className="cocktail-item">
+      <article>
+        <div className="img-container">
+          <img src={image} alt={name} className="img" />
+        </div>
+        <div className="footer">
+          <h4>{name}</h4>
+          <h5>{glass}</h5>
+          <p>{info}</p>
+
+          <Link to={`/cocktail/${id}`} className="btn">
+            details
+          </Link>
+        </div>
+      </article>
+    </div>
+  );
+}
+```
+
+- CocktailList css
+
+```css
+.cocktail-item {
+  background: var(--white);
+  box-shadow: var(--shadow-2);
+  transition: var(--transition);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: var(--borderRadius);
+}
+
+.cocktail-item:hover {
+  box-shadow: var(--shadow-4);
+}
+
+.cocktail-item img {
+  height: 15rem;
+  border-top-left-radius: var(--borderRadius);
+  border-top-right-radius: var(--borderRadius);
+}
+.cocktail-item .footer {
+  padding: 1.5rem;
+  h4,
+  h5 {
+    margin-bottom: 0.5rem;
+  }
+  h4 {
+    font-weight: 700;
+  }
+  p {
+    margin-bottom: 1rem;
+    color: var(--grey-500);
+  }
+}
+```

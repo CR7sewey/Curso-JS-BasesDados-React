@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
+import SearchForm from "../components/SearchForm";
+import CocktailList from "../components/CocktailList";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
@@ -20,8 +22,8 @@ const Landing = () => {
   console.log(drinks);
   return (
     <>
-      <h2>home page</h2>
-      <Link to="/about">About</Link>
+      <SearchForm />
+      <CocktailList drinks={drinks} />
     </>
   );
 };
