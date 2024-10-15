@@ -537,3 +537,43 @@ export default Landing;
 
 - se search term fro 'a' returns algumas bebidas default (que contem a)
 - se search term não tiver correspondenica, retorna null
+
+#### Mais Erros
+
+- ex: caso nao haja return do loader
+- ex: url errado
+
+App.jsx
+
+```js
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        loader: landingLoader,
+        errorElement: <h2>Há um erro...</h2>,
+        element: <Landing />,
+      },
+    ],
+  },
+]);
+```
+
+#### SinglePageError Componente
+
+- criar pages/SinglePageError.jsx
+- usar no App.jsx (errorElement)
+
+```js
+import { useRouteError } from "react-router-dom";
+const SinglePageError = () => {
+  const error = useRouteError();
+  console.log(error);
+  return <h2>{error.message}</h2>;
+};
+export default SinglePageError;
+```

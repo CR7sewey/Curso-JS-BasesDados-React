@@ -5,6 +5,7 @@ import HomeLayout from "./pages/HomeLayout";
 import Cocktail from "./pages/Cocktail";
 import Newsletter from "./pages/Newsletter";
 import Error from "./pages/Error";
+import SinglePageError from "./pages/SinglePageError";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+        errorElement: <SinglePageError />,
         loader: landingLoader,
       },
       {
