@@ -929,3 +929,196 @@ import { toast } from "react-toastify";
 
 toast.success("Hi there");
 ```
+
+#### Newsletter
+
+Newsletter.jsx
+
+```js
+const Newsletter = () => {
+  return (
+    <form className="form">
+      <h4 style={{ textAlign: "center", marginBottom: "2rem" }}>
+        our newsletter
+      </h4>
+      {/* name */}
+      <div className="form-row">
+        <label htmlFor="name" className="form-label">
+          name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="name"
+          id="name"
+          defaultValue="john"
+        />
+      </div>
+      {/* last name */}
+      <div className="form-row">
+        <label htmlFor="lastName" className="form-label">
+          last name
+        </label>
+        <input
+          type="text"
+          className="form-input"
+          name="lastName"
+          id="lastName"
+          defaultValue="smith"
+        />
+      </div>
+      {/* name */}
+      <div className="form-row">
+        <label htmlFor="email" className="form-label">
+          email
+        </label>
+        <input
+          type="email"
+          className="form-input"
+          name="email"
+          id="email"
+          defaultValue="test@test.com"
+        />
+      </div>
+      <button
+        type="submit"
+        className="btn btn-block"
+        style={{ marginTop: "0.5rem" }}
+      >
+        submit
+      </button>
+    </form>
+  );
+};
+
+export default Newsletter;
+```
+
+#### Comportamento default
+
+O atributo "method" num form HTML especifica o metodo HTTP que vai ser usado
+quando alguem submete a data do form para o servidor. Os metodos mais comuns são:
+
+GET: Este é um metodo default qunado nao especificado. Quando o form é submetido
+com o metodo GET, a data do form é anexado ao URL como uma query string (ex: http://...?q=a&b=c)
+A data torna-se visivel no URL, que pode ser guardad e partilhada. Os requests
+GET sao geralmente usados para retornar dados do servidor e pode nao ter qualquer
+efeito no servidor (so consulta).
+
+POST: Este é um metodo que é submetido com o metodo POST, em que a data do form
+é incluido no payload do request em vez de ser anexado ao URL. Os requests POST
+sao tipicamente usados quando sao subemetidos dados sensiveis ou grandes quantidade
+de dados para o servidor. Assim, a data nao é diretamente visivel no URL. Os requests
+POST podem ter efeitos laterais no servidor, como fazer o update ou inserir data.
+
+- Atributo action
+
+  O atributo "action" no form HTML especifica o URL ou o destino onde a data do
+  form pode ser mandada quando o form é submetido. Define entao um endepoint/server-side
+  que vai receber a data e processa-la
+
+Se o atributo de action nao for providenciado no form do HTML, o browser vai mandar
+a data do form para o URL atual, que significa que vai estar a submeter o form para a mesma pagina em que o form está. Este comportamento é referido como um "self-submitting" form.
+
+#### FormData API
+
+- coberto no React Intermedio
+  [JS Nuggets - FormData API](https://youtu.be/5-x4OUM-SP8)
+
+- Uma boa solucao com vários inputs
+- inputs devem ter o atributo name
+
+A API de FormData providencia uma forma de construir um conjunto de chave/valor
+ao representar os campos do form e os valores, que podem ser mandando com o usdo
+do fetch ou axios. Usa o mesmo formato que um forma ira usar se o tipo de enconding
+for set como "multipart/form-data".
+
+#### React Router - Action
+
+Route actions are the "writes" to route loader "reads". They provide a way for apps to perform data mutations with simple HTML and HTTP semantics while React Router abstracts away the complexity of asynchronous UI and revalidation. This gives you the simple mental model of HTML + HTTP (where the browser handles the asynchrony and revalidation) with the behavior and UX capabilities of modern SPAs.
+
+Newsletter.jsx
+
+```js
+import { Form } from 'react-router-dom';
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  return 'something';
+};
+
+const Newsletter = () => {
+  return (
+    <Form className='form' method='POST'>
+    .....)
+}
+```
+
+App.jsx
+
+```js
+import { action as newsletterAction } from "./pages/Newsletter";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "newsletter",
+        action: newsletterAction,
+        element: <Newsletter />,
+      },
+    ],
+  },
+]);
+```
+
+#### Newsletter Request
+
+const newsletterUrl = 'https://www.course-api.com/cocktails-newsletter';
+
+Newsletter.jsx
+
+```js
+import { Form, redirect } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const newsletterUrl = "https://www.course-api.com/cocktails-newsletter";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  const response = await axios.post(newsletterUrl, data);
+  console.log(response);
+  return response;
+};
+```
+
+#### Try/Catch
+
+Newsletter.jsx
+
+```js
+import { redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+    const response = await axios.post(newsletterUrl, data);
+    console.log(response);
+    toast.success(response.data.msg);
+    return redirect("/");
+  } catch (error) {
+    console.log(error);
+    toast.error(error?.response?.data?.msg);
+    return error;
+  }
+};
+```

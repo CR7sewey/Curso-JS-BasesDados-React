@@ -3,7 +3,7 @@ import About from "./pages/About";
 import Landing, { loader as landingLoader } from "./pages/Landing";
 import HomeLayout from "./pages/HomeLayout";
 import Cocktail, { loader as singleCocktailLoader } from "./pages/Cocktail";
-import Newsletter from "./pages/Newsletter";
+import Newsletter, { action as newsletterAction } from "./pages/Newsletter";
 import Error from "./pages/Error";
 import SinglePageError from "./pages/SinglePageError";
 
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       {
         path: "newsletter",
         element: <Newsletter />,
+        action: newsletterAction,
       },
       {
         path: "about",
