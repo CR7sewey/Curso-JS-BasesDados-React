@@ -6,9 +6,10 @@ import CocktailList from "../components/CocktailList";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
-export const loader = async () => {
+export const loader = async ({ request }) => {
   try {
-    const searchTerm = "a";
+    const url2 = new URL(request.url);
+    const searchTerm = url2.searchParams.get("search") || "a";
     const response = await axios(url.concat(searchTerm));
     return { drinks: response.data.drinks, searchTerm };
   } catch (e) {
@@ -22,7 +23,7 @@ const Landing = () => {
   console.log(drinks);
   return (
     <>
-      <SearchForm />
+      <SearchForm searchTerm={searchTerm} />
       <CocktailList drinks={drinks} />
     </>
   );

@@ -1122,3 +1122,134 @@ export const action = async ({ request }) => {
   }
 };
 ```
+
+#### Submit State
+
+Newsletter.jsx
+
+```js
+import { Form, useNavigation } from "react-router-dom";
+
+const Newsletter = () => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  return (
+    <Form className="form" method="POST">
+      ....
+      <button
+        type="submit"
+        className="btn btn-block"
+        style={{ marginTop: "0.5rem" }}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "submitting..." : "submit"}
+      </button>
+    </Form>
+  );
+};
+```
+
+#### Search Form - Setup
+
+components/SearchForm.jsx
+
+```js
+import { Form, useNavigation } from "react-router-dom";
+const SearchForm = () => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+  return (
+    <div className="search">
+      <Form className="form">
+        <input
+          type="search"
+          name="search"
+          className="form-input"
+          defaultValue="vodka"
+        />
+        <button type="submit" className="btn" disabled={isSubmitting}>
+          {isSubmitting ? "searching..." : "search"}
+        </button>
+      </Form>
+    </div>
+  );
+};
+
+export default SearchForm;
+```
+
+```css
+.search .form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.search .form-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.search .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+```
+
+#### Query Params
+
+Landing.jsx
+
+```js
+export const loader = async ({ request }) => {
+  const url = new URL(request.url);
+  const searchTerm = url.searchParams.get("search") || "";
+  const response = await axios.get(`${cocktailSearchUrl}${searchTerm}`);
+  return { drinks: response.data.drinks, searchTerm };
+};
+```
+
+Esta linha de código cria um novo objeto URL utilizando o construtor URL. O objeto URL representa um URL e fornece métodos e propriedades para trabalhar com URLs. Neste caso, request.url é passado como um argumento para o construtor de URL para criar um novo objeto URL chamado url.
+
+O request.url é um parâmetro de entrada que representa o URL de um pedido HTTP de entrada. Ao criar um objeto URL a partir do URL fornecido, pode facilmente extrair componentes específicos e executar operações sobre ele.
+const searchTerm = url.searchParams.get('search') || '';
+
+Esta linha de código recupera o valor do parâmetro de pesquisa a partir da cadeia de caracteres de consulta do URL. A propriedade searchParams do objeto URL fornece um objeto URLSearchParams, que lhe permite aceder e manipular os parâmetros de consulta do URL.
+
+O método get() do objeto URLSearchParams recupera o valor de um parâmetro específico, passando o seu nome como argumento. Neste caso, “search” é passado como o nome do parâmetro. Se o parâmetro de pesquisa existir na cadeia de consulta do URL, o seu valor será atribuído à variável searchTerm. Se o parâmetro de pesquisa não estiver presente ou o seu valor estiver vazio, a expressão '' (uma cadeia vazia) é atribuída a searchTerm utilizando o operador lógico OR (||).
+
+#### Controlled Input
+
+Landing.js
+
+```js
+const Landing = () => {
+  const { searchTerm, drinks } = useLoaderData();
+
+  return (
+    <>
+      <SearchForm searchTerm={searchTerm} />
+      <CocktailList drinks={drinks} />
+    </>
+  );
+};
+```
+
+SearchForm.jsx
+
+```js
+const SearchForm = ({ searchTerm }) => {
+  return (
+    <Wrapper>
+      <Form className="form">
+        <input
+          type="search"
+          name="search"
+          className="form-input"
+          defaultValue={searchTerm}
+        />
+        .....
+      </Form>
+    </Wrapper>
+  );
+};
+
+export default SearchForm;
+```

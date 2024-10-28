@@ -511,3 +511,16 @@ PROJECT CSS
   border-top-color: var(--primary-500);
   animation: spinner 0.6s linear infinite;
 }
+
+.search .form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.search .form-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.search .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
