@@ -32,5 +32,3 @@ Steps:
 2. Conectar a um servidor:
 
    - Temos de conectar o Workbench a um servidor para ele puder ser usado para correr as queries de SQL (pdf - connect_workbench)
-
-3. Criar uma Base de Dados

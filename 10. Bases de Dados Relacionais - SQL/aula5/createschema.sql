@@ -1,0 +1,1 @@
+create schema base_de_dados_curso2024;
