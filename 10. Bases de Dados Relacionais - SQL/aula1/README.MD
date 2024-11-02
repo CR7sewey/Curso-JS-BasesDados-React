@@ -77,3 +77,9 @@ A linguagem mais comum e amplamente usada para interagir com bases de dados é a
 
 ... Mais dependendo do tipo de linguagem usada. No curso vamos focar em bases
 de dados relacionais e na linguagem SQL
+
+### Porquê aprender SQL?
+
+- SQL é a linguagem standard para a manutenção/manipulação de bases de dados relacionais
+- Podemos descarregar, filtrar e analisar uma enorme quantidade de dados ao usar SQL
+- SQL é relativamente fácil, muito poderoso, e sobretudo... essencial saber
