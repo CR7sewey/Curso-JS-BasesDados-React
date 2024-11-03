@@ -1,0 +1,6 @@
+DELETE FROM users
+WHERE id = 13;
+
+
+DELETE FROM users
+WHERE id BETWEEN 10 and 15;
