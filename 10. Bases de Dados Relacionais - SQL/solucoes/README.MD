@@ -1,7 +1,5 @@
 ## Bases de Dados
 
-### Exercícios
-
 ```sql
 -- 1) Insira 5 usuários (users)
 -- 2) Insira 5 perfis (profiles) para os usuários inseridos
