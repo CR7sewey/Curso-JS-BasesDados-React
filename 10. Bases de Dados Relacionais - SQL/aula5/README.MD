@@ -1,5 +1,7 @@
 ## Bases de Dados
 
+### DDL - data definition language
+
 ### Criar uma Base de Dados
 
 - Forma 1: manualmente
