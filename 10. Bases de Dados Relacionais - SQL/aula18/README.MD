@@ -22,3 +22,4 @@ select users.id, (select id from roles order by rand() limit 1) from users
 
 Notas:
 select id from roles order by rand() limit 1 -> o retorno tem de ser um valor e não um array, daí o limit 1
+meter insert ignore into ... para correr uma segunda vez (problema de puder repetir pk)
