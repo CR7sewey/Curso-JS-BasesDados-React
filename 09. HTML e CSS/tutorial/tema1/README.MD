@@ -48,3 +48,5 @@ tag head: metadados do meu html, a especificaçao do que tem o meu html. Exemplo
 tag body: onde metemos as tags que vão ser mostradas no navegador
 
 [validarHTML]https://validator.w3.org/
+
+Ir a uma página, tipo o jornal publico, fazer inspect e alterar para ver mudanças
