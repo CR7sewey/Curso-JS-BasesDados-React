@@ -28,26 +28,35 @@ Cada tag pode levar style (que é o css)
 
 Outra forma é meter a tag <style></style> na head
 
-tag de negrito: <b></b> - estado fisico - sem significado, apenas para deixar em negrito
-tag strong: <strong></strong> - estado logico - semantica (tem significado) - ex: eu amo comer
-tag italico: <i></i> - estado fisico
-tag enfase: <em></em> - estado logico
-tag link: <a href="https://www.google.com/">sou um link para o google</a> - href é o link
-tag imagem: <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb-NGEQDekk2BwsllLjk4tcIM_BPIzXECdsg&s" alt="image-1" /> - src é a imagem e alt o texto alternativo que aparece caso imagem nao exista
-tag quebrar linha: <br />
-tag span: <span></span> - containers generico (in-line)
-tag div: <div></div> - container generico (talvez a tag mais usada de todas)
-e muito mais ...
+- tag de negrito: <b></b> - estado fisico - sem significado, apenas para deixar em negrito
+- tag strong: <strong></strong> - estado logico - semantica (tem significado) - ex: eu amo comer
+- tag italico: <i></i> - estado fisico
+- tag enfase: <em></em> - estado logico
+- tag link: <a href="https://www.google.com/">sou um link para o google</a> - href é o link
+- tag imagem: <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb-NGEQDekk2BwsllLjk4tcIM_BPIzXECdsg&s" alt="image-1" /> - src é a imagem e alt o texto alternativo que aparece caso imagem nao exista
+- tag quebrar linha: <br />
+- tag span: <span></span> - containers generico (in-line)
+- tag div: <div></div> - container generico (talvez a tag mais usada de todas)
+- e muito mais ...
+- [elementosHTML]https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element
 
+```html
 <div>
-<p>
-  <strong>Lorem</strong> <b>ipsum</b> <i>dolor</i> <em>sit</em> amet,
-  consectetur adipisicing elit. Ullam, tempore. <br />Provident odio, dolore
-  dolorum aperiam ullam reprehenderit quam voluptates laboriosam rerum
-  corrupti consequatur recusandae tenetur <span style="color: red">veritatis</span> nihil iure a eum?
-</p>
+  <p>
+    <strong>Lorem</strong> <b>ipsum</b> <i>dolor</i> <em>sit</em> amet,
+    consectetur adipisicing elit. Ullam, tempore. <br />Provident odio, dolore
+    dolorum aperiam ullam reprehenderit quam voluptates laboriosam rerum
+    corrupti consequatur recusandae tenetur
+    <span style="color: red">veritatis</span> nihil iure a eum?
+  </p>
 </div>
 <div>
-<a href="https://www.google.com/" target="_blank">sou um link para o google</a>
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb-NGEQDekk2BwsllLjk4tcIM_BPIzXECdsg&s" alt="image-1" />
+  <a href="https://www.google.com/" target="_blank"
+    >sou um link para o google</a
+  >
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb-NGEQDekk2BwsllLjk4tcIM_BPIzXECdsg&s"
+    alt="image-1"
+  />
 </div>
+```
