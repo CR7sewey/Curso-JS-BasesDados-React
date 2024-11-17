@@ -68,10 +68,10 @@ O VS Code é uma ferramenta poderosa projetada para o desenvolvimento de softwar
 
 ### Diferenças principais
 
-Aspecto | JavaScript | Node.js
-Onde é executado | No navegador (front-end) | Fora do navegador, em servidores (back-end).
-Finalidade | Interatividade e lógica em páginas web. | Desenvolvimento de aplicações e serviços no servidor.
-APIs | Tem acesso ao DOM e ao BOM do navegador. | Oferece APIs para acessar arquivos, rede e sistema operacional.
+- Aspecto | JavaScript | Node.js
+- Onde é executado | No navegador (front-end) | Fora do navegador, em servidores (back-end).
+- Finalidade | Interatividade e lógica em páginas web. | Desenvolvimento de aplicações e serviços no servidor.
+- APIs | Tem acesso ao DOM e ao BOM do navegador. | Oferece APIs para acessar arquivos, rede e sistema operacional.
 
 Resumindo, JavaScript é a linguagem, enquanto o Node.js é o ambiente que expande o uso do JavaScript para o lado do servidor.
 
@@ -116,10 +116,10 @@ Resumo:
 
 ### Diferenças principais
 
-Aspecto | Frontend | Backend
-Foco |Aparência e interação do usuário.| Processamento de dados e lógica do sistema.
-Usuário final! Visível para o usuário.! Invisível para o usuário.
-Tecnologias |HTML, CSS, JavaScript, frameworks visuais. |Linguagens de servidor, bancos de dados, APIs.
-Função |Tornar o sistema acessível e intuitivo. |Fazer o sistema funcionar e processar informações.
+- Aspecto | Frontend | Backend
+- Foco | Aparência e interação do usuário. | Processamento de dados e lógica do sistema.
+- Usuário final| Visível para o usuário. | Invisível para o usuário.
+- Tecnologias | HTML, CSS, JavaScript, frameworks visuais. | Linguagens de servidor, bancos de dados, APIs.
+- Função | Tornar o sistema acessível e intuitivo. | Fazer o sistema funcionar e processar informações.
 
 Resumindo, o frontend lida com o que os usuários veem, enquanto o backend trabalha nos bastidores para que tudo funcione corretamente. Juntos, formam o núcleo de uma aplicação completa!
